@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 import { ThemeProvider } from "./components/ThemeProvider";
+import BackToTop from "./components/BackToTop";
 import "./styles.css"; // Add this import for custom animations
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <BackToTop />
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>
