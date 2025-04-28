@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
 import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
+import { useLocation } from "react-router-dom";
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -15,6 +16,10 @@ const navLinks = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  
+  const isAdminPage = location.pathname === "/admin";
+  const homeUrl = isAdminPage ? "/" : "#home";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -37,13 +42,13 @@ export default function Header() {
       )}
     >
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <a href="#home" className="text-2xl font-bold font-mono text-gradient">
+        <a href={homeUrl} className="text-2xl font-bold font-mono text-gradient">
           Dev<span className="text-primary">Folio</span>
         </a>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
+          {!isAdminPage && navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
@@ -52,6 +57,14 @@ export default function Header() {
               {link.name}
             </a>
           ))}
+          {isAdminPage && (
+            <a
+              href="/"
+              className="text-foreground/80 hover:text-primary transition-colors font-medium"
+            >
+              Back to Site
+            </a>
+          )}
           <ThemeToggle />
         </nav>
 
@@ -74,7 +87,7 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-md border-b shadow-lg animate-fade-in">
           <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
-            {navLinks.map((link) => (
+            {!isAdminPage && navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
@@ -84,6 +97,15 @@ export default function Header() {
                 {link.name}
               </a>
             ))}
+            {isAdminPage && (
+              <a
+                href="/"
+                className="text-foreground/80 hover:text-primary transition-colors font-medium py-2"
+                onClick={closeMobileMenu}
+              >
+                Back to Site
+              </a>
+            )}
           </nav>
         </div>
       )}
