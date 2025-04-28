@@ -27,10 +27,10 @@ export default function SkillsSection() {
     const savedSkills = localStorage.getItem("portfolio-skills");
     if (savedSkills) {
       try {
-        const loadedSkills = JSON.parse(savedSkills);
+        const loadedSkills = JSON.parse(savedSkills) as Skill[];
         setSkills(loadedSkills);
         
-        // Extract unique categories
+        // Extract unique categories with proper typing
         const uniqueCategories = Array.from(
           new Set(loadedSkills.map((skill: Skill) => skill.category))
         );
