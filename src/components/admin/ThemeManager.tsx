@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,6 +10,7 @@ const ThemeManager = () => {
   const [primaryColor, setPrimaryColor] = useState("#000000");
   const [secondaryColor, setSecondaryColor] = useState("#e0e0e0");
   const [accentColor, setAccentColor] = useState("#0284c7");
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const { theme, setTheme } = useTheme();
   const { toast } = useToast();
 
@@ -25,6 +25,11 @@ const ThemeManager = () => {
     if (savedAccent) setAccentColor(savedAccent);
   }, []);
 
+  // Track color changes
+  useEffect(() => {
+    setHasUnsavedChanges(true);
+  }, [primaryColor, secondaryColor, accentColor]);
+
   const applyThemeColors = () => {
     // Set CSS variables
     document.documentElement.style.setProperty("--primary-color", primaryColor);
@@ -35,6 +40,9 @@ const ThemeManager = () => {
     localStorage.setItem("theme-primary-color", primaryColor);
     localStorage.setItem("theme-secondary-color", secondaryColor);
     localStorage.setItem("theme-accent-color", accentColor);
+
+    // Reset unsaved changes flag
+    setHasUnsavedChanges(false);
 
     toast({
       title: "Theme Updated",
@@ -57,11 +65,30 @@ const ThemeManager = () => {
     document.documentElement.style.removeProperty("--secondary-color");
     document.documentElement.style.removeProperty("--accent-color");
 
+    // Reset unsaved changes flag
+    setHasUnsavedChanges(false);
+
     toast({
       title: "Theme Reset",
       description: "Theme colors have been reset to defaults.",
     });
   };
+
+  // Make the apply theme colors method accessible from parent
+  useEffect(() => {
+    const handleSaveAll = () => {
+      if (hasUnsavedChanges) {
+        applyThemeColors();
+      }
+    };
+    
+    // Listen for save-all-changes event
+    window.addEventListener('save-all-changes', handleSaveAll);
+    
+    return () => {
+      window.removeEventListener('save-all-changes', handleSaveAll);
+    };
+  }, [primaryColor, secondaryColor, accentColor, hasUnsavedChanges]);
 
   return (
     <div>
