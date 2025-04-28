@@ -49,6 +49,23 @@ export function ThemeProvider({
     root.classList.add(theme);
   }, [theme]);
 
+  // Apply saved theme colors from localStorage
+  useEffect(() => {
+    const savedPrimaryColor = localStorage.getItem("theme-primary-color");
+    const savedSecondaryColor = localStorage.getItem("theme-secondary-color");
+    const savedAccentColor = localStorage.getItem("theme-accent-color");
+    
+    if (savedPrimaryColor) {
+      document.documentElement.style.setProperty("--primary-color", savedPrimaryColor);
+    }
+    if (savedSecondaryColor) {
+      document.documentElement.style.setProperty("--secondary-color", savedSecondaryColor);
+    }
+    if (savedAccentColor) {
+      document.documentElement.style.setProperty("--accent-color", savedAccentColor);
+    }
+  }, []);
+
   const value = {
     theme,
     setTheme: (theme: Theme) => {

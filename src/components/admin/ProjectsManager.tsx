@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -50,11 +49,26 @@ interface Project {
 }
 
 const ProjectsManager = () => {
-  const [projects, setProjects] = useState<Project[]>(initialProjects);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
   const [tagInput, setTagInput] = useState("");
   const { toast } = useToast();
+
+  useEffect(() => {
+    // Load projects from localStorage if available
+    const savedProjects = localStorage.getItem("portfolio-projects");
+    if (savedProjects) {
+      try {
+        setProjects(JSON.parse(savedProjects));
+      } catch (error) {
+        console.error("Error loading projects from localStorage:", error);
+        setProjects(initialProjects);
+      }
+    } else {
+      setProjects(initialProjects);
+    }
+  }, []);
 
   const emptyProject: Project = {
     id: "",
@@ -76,6 +90,10 @@ const ProjectsManager = () => {
     setIsOpen(true);
   };
 
+  const saveToLocalStorage = (updatedProjects: Project[]) => {
+    localStorage.setItem("portfolio-projects", JSON.stringify(updatedProjects));
+  };
+
   const handleSave = () => {
     if (!currentProject) return;
     
@@ -88,25 +106,36 @@ const ProjectsManager = () => {
       return;
     }
 
+    let updatedProjects: Project[];
+
     if (projects.find(p => p.id === currentProject.id)) {
-      setProjects(projects.map(p => p.id === currentProject.id ? currentProject : p));
+      updatedProjects = projects.map(p => p.id === currentProject.id ? currentProject : p);
+      setProjects(updatedProjects);
       toast({
         title: "Success",
         description: "Project updated successfully",
       });
     } else {
-      setProjects([...projects, currentProject]);
+      updatedProjects = [...projects, currentProject];
+      setProjects(updatedProjects);
       toast({
         title: "Success",
         description: "Project created successfully",
       });
     }
     
+    // Save to localStorage
+    saveToLocalStorage(updatedProjects);
     setIsOpen(false);
   };
 
   const handleDelete = (id: string) => {
-    setProjects(projects.filter(p => p.id !== id));
+    const updatedProjects = projects.filter(p => p.id !== id);
+    setProjects(updatedProjects);
+    
+    // Save to localStorage
+    saveToLocalStorage(updatedProjects);
+    
     toast({
       title: "Success",
       description: "Project deleted successfully",
