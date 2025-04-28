@@ -31,6 +31,7 @@ const SkillsManager = () => {
   const [skills, setSkills] = useState<Skill[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [currentSkill, setCurrentSkill] = useState<Skill | null>(null);
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -57,6 +58,7 @@ const SkillsManager = () => {
 
   const saveToLocalStorage = (updatedSkills: Skill[]) => {
     localStorage.setItem("portfolio-skills", JSON.stringify(updatedSkills));
+    setHasUnsavedChanges(false);
   };
 
   const handleEdit = (skill: Skill) => {
@@ -116,6 +118,31 @@ const SkillsManager = () => {
       description: "Skill deleted successfully",
     });
   };
+
+  // Track changes to skills
+  useEffect(() => {
+    setHasUnsavedChanges(true);
+  }, [skills]);
+
+  // Listen for global save event
+  useEffect(() => {
+    const handleSaveAll = () => {
+      if (hasUnsavedChanges) {
+        saveToLocalStorage(skills);
+        toast({
+          title: "Skills Saved",
+          description: "Your skills have been updated successfully.",
+        });
+      }
+    };
+    
+    // Listen for save-all-changes event
+    window.addEventListener('save-all-changes', handleSaveAll);
+    
+    return () => {
+      window.removeEventListener('save-all-changes', handleSaveAll);
+    };
+  }, [skills, hasUnsavedChanges]);
 
   return (
     <div>

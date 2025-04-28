@@ -53,6 +53,7 @@ const ProjectsManager = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
   const [tagInput, setTagInput] = useState("");
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -92,6 +93,7 @@ const ProjectsManager = () => {
 
   const saveToLocalStorage = (updatedProjects: Project[]) => {
     localStorage.setItem("portfolio-projects", JSON.stringify(updatedProjects));
+    setHasUnsavedChanges(false);
   };
 
   const handleSave = () => {
@@ -141,6 +143,31 @@ const ProjectsManager = () => {
       description: "Project deleted successfully",
     });
   };
+
+  // Track changes to projects
+  useEffect(() => {
+    setHasUnsavedChanges(true);
+  }, [projects]);
+
+  // Listen for global save event
+  useEffect(() => {
+    const handleSaveAll = () => {
+      if (hasUnsavedChanges) {
+        saveToLocalStorage(projects);
+        toast({
+          title: "Projects Saved",
+          description: "Your projects have been updated successfully.",
+        });
+      }
+    };
+    
+    // Listen for save-all-changes event
+    window.addEventListener('save-all-changes', handleSaveAll);
+    
+    return () => {
+      window.removeEventListener('save-all-changes', handleSaveAll);
+    };
+  }, [projects, hasUnsavedChanges]);
 
   const addTag = () => {
     if (!tagInput || !currentProject) return;
