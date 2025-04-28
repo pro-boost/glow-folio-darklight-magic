@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -12,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 const categories = ["Frontend", "Backend", "Design", "DevOps", "Mobile", "Other"];
 
 // Sample initial skills
-const initialSkills = [
+const defaultSkills = [
   { id: "1", name: "React", category: "Frontend", level: 90 },
   { id: "2", name: "Node.js", category: "Backend", level: 85 },
   { id: "3", name: "TypeScript", category: "Frontend", level: 80 },
@@ -29,16 +28,35 @@ interface Skill {
 }
 
 const SkillsManager = () => {
-  const [skills, setSkills] = useState<Skill[]>(initialSkills);
+  const [skills, setSkills] = useState<Skill[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [currentSkill, setCurrentSkill] = useState<Skill | null>(null);
   const { toast } = useToast();
+
+  useEffect(() => {
+    // Load skills from localStorage if available
+    const savedSkills = localStorage.getItem("portfolio-skills");
+    if (savedSkills) {
+      try {
+        setSkills(JSON.parse(savedSkills));
+      } catch (error) {
+        console.error("Error loading skills from localStorage:", error);
+        setSkills(defaultSkills);
+      }
+    } else {
+      setSkills(defaultSkills);
+    }
+  }, []);
 
   const emptySkill: Skill = {
     id: "",
     name: "",
     category: categories[0],
     level: 50
+  };
+
+  const saveToLocalStorage = (updatedSkills: Skill[]) => {
+    localStorage.setItem("portfolio-skills", JSON.stringify(updatedSkills));
   };
 
   const handleEdit = (skill: Skill) => {
@@ -63,25 +81,36 @@ const SkillsManager = () => {
       return;
     }
 
+    let updatedSkills: Skill[];
+
     if (skills.find(s => s.id === currentSkill.id)) {
-      setSkills(skills.map(s => s.id === currentSkill.id ? currentSkill : s));
+      updatedSkills = skills.map(s => s.id === currentSkill.id ? currentSkill : s);
+      setSkills(updatedSkills);
       toast({
         title: "Success",
         description: "Skill updated successfully",
       });
     } else {
-      setSkills([...skills, currentSkill]);
+      updatedSkills = [...skills, currentSkill];
+      setSkills(updatedSkills);
       toast({
         title: "Success",
         description: "Skill created successfully",
       });
     }
     
+    // Save to localStorage
+    saveToLocalStorage(updatedSkills);
     setIsOpen(false);
   };
 
   const handleDelete = (id: string) => {
-    setSkills(skills.filter(s => s.id !== id));
+    const updatedSkills = skills.filter(s => s.id !== id);
+    setSkills(updatedSkills);
+    
+    // Save to localStorage
+    saveToLocalStorage(updatedSkills);
+    
     toast({
       title: "Success",
       description: "Skill deleted successfully",

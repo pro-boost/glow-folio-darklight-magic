@@ -1,10 +1,22 @@
 
+import { useEffect, useState } from "react";
 import { ExternalLink, Github } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 
-const projects = [
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  liveUrl: string;
+  githubUrl: string;
+}
+
+const defaultProjects = [
   {
+    id: "1",
     title: "E-commerce Platform",
     description: "A full-featured online store with product listings, cart functionality, and payment processing.",
     image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800",
@@ -13,6 +25,7 @@ const projects = [
     githubUrl: "#"
   },
   {
+    id: "2",
     title: "Task Management App",
     description: "A collaborative project management tool with real-time updates and team features.",
     image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=800",
@@ -21,6 +34,7 @@ const projects = [
     githubUrl: "#"
   },
   {
+    id: "3",
     title: "Personal Finance Dashboard",
     description: "An interactive dashboard for tracking expenses, investments, and financial goals.",
     image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=800",
@@ -31,6 +45,20 @@ const projects = [
 ];
 
 export default function ProjectsSection() {
+  const [projects, setProjects] = useState<Project[]>(defaultProjects);
+
+  useEffect(() => {
+    // Load projects from localStorage if available
+    const savedProjects = localStorage.getItem("portfolio-projects");
+    if (savedProjects) {
+      try {
+        setProjects(JSON.parse(savedProjects));
+      } catch (error) {
+        console.error("Error loading projects from localStorage:", error);
+      }
+    }
+  }, []);
+
   return (
     <section id="projects" className="py-20 bg-secondary/30">
       <div className="container mx-auto px-4">
@@ -46,7 +74,7 @@ export default function ProjectsSection() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <div 
-              key={index} 
+              key={project.id} 
               className={cn(
                 "group bg-card border border-border/50 rounded-xl overflow-hidden shadow-sm transition-all hover:shadow-lg animate-scale-in",
                 index === 1 ? "delay-200" : index === 2 ? "delay-400" : "",
