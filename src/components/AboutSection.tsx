@@ -2,21 +2,6 @@ import { Code, Globe, Server, Palette, Accessibility, Zap } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
 import { cn } from "@/lib/utils";
 
-const skills = [
-  "React",
-  "Next.js",
-  "TypeScript",
-  "JavaScript",
-  "HTML5",
-  "CSS3/SASS",
-  "TailwindCSS",
-  "UI/UX Design",
-  "Responsive Design",
-  "Accessibility",
-  "Web Performance",
-  "Git",
-];
-
 const services = [
   {
     icon: Globe,
@@ -45,12 +30,22 @@ export default function AboutSection() {
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">About Me</h2>
           <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-8"></div>
-          <p className="text-lg text-foreground/80 max-w-3xl mx-auto">
-            I'm a passionate front-end developer with expertise in modern web
-            technologies and UI/UX design. I specialize in creating polished,
-            accessible, and production-ready web interfaces that deliver
-            exceptional user experiences.
-          </p>
+          <h3 className="text-xl md:text-2xl font-semibold mb-6 text-foreground/90">
+            Frontend Developer & UI/UX Enthusiast
+          </h3>
+          <div className="max-w-3xl mx-auto">
+            <p className="text-lg text-foreground/80 leading-relaxed text-justify">
+              I'm a passionate front-end developer specializing in creating
+              polished, accessible, and production-ready web interfaces. With
+              extensive experience in React, Next.js, and TypeScript, I build
+              complex user interfaces that are both performant and maintainable.
+              My approach combines technical excellence with a deep
+              understanding of user needs and modern design patterns. I'm
+              committed to creating intuitive user experiences that follow
+              accessibility standards and best practices, while staying current
+              with the latest web technologies and design trends.
+            </p>
+          </div>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
@@ -73,45 +68,6 @@ export default function AboutSection() {
               </CardContent>
             </Card>
           ))}
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="animate-fade-in">
-            <h3 className="text-2xl font-bold mb-6">My Expertise</h3>
-            <p className="text-foreground/80 mb-4 leading-relaxed">
-              With a strong foundation in front-end development and UI/UX
-              principles, I create web applications that are not only visually
-              appealing but also highly functional and accessible. My approach
-              combines technical excellence with a deep understanding of user
-              needs and modern design patterns.
-            </p>
-            <p className="text-foreground/80 mb-4 leading-relaxed">
-              I have extensive experience with React, Next.js, and TypeScript,
-              building complex user interfaces that are both performant and
-              maintainable. My work focuses on creating intuitive user
-              experiences that follow accessibility standards and best
-              practices.
-            </p>
-            <p className="text-foreground/80 leading-relaxed">
-              I'm passionate about staying current with the latest web
-              technologies and design trends, continuously improving my skills
-              to deliver cutting-edge solutions that meet modern web standards.
-            </p>
-          </div>
-
-          <div className="animate-fade-in delay-200">
-            <h3 className="text-2xl font-bold mb-6">Technical Skills</h3>
-            <div className="flex flex-wrap gap-3">
-              {skills.map((skill, index) => (
-                <span
-                  key={index}
-                  className="px-4 py-2 bg-secondary text-foreground rounded-full text-sm font-medium hover:bg-primary/10 transition-colors"
-                >
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
     </section>

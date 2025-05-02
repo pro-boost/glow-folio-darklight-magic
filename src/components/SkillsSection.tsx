@@ -1,4 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
 
 interface Skill {
   id: string;
@@ -26,16 +29,19 @@ export default function SkillsSection() {
   const [skills, setSkills] = useState<Skill[]>(defaultSkills);
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [categories, setCategories] = useState<string[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [skillsPerPage, setSkillsPerPage] = useState(6);
+  const [slideDirection, setSlideDirection] = useState<"left" | "right" | null>(
+    null
+  );
 
   useEffect(() => {
-    // Load skills from localStorage if available
     const savedSkills = localStorage.getItem("portfolio-skills");
     if (savedSkills) {
       try {
         const loadedSkills = JSON.parse(savedSkills) as Skill[];
         setSkills(loadedSkills);
-
-        // Extract unique categories with proper typing
         const uniqueCategories = Array.from(
           new Set(loadedSkills.map((skill: Skill) => skill.category))
         );
@@ -44,7 +50,6 @@ export default function SkillsSection() {
         console.error("Error loading skills from localStorage:", error);
       }
     } else {
-      // Extract unique categories from default skills
       const uniqueCategories = Array.from(
         new Set(defaultSkills.map((skill) => skill.category))
       );
@@ -52,10 +57,83 @@ export default function SkillsSection() {
     }
   }, []);
 
+  useEffect(() => {
+    const updateSkillsPerPage = () => {
+      if (window.innerWidth < 640) {
+        setSkillsPerPage(3);
+      } else if (window.innerWidth < 1024) {
+        setSkillsPerPage(4);
+      } else {
+        setSkillsPerPage(6);
+      }
+    };
+
+    updateSkillsPerPage();
+    window.addEventListener("resize", updateSkillsPerPage);
+    return () => window.removeEventListener("resize", updateSkillsPerPage);
+  }, []);
+
   const filteredSkills =
     activeCategory === "all"
       ? skills
       : skills.filter((skill) => skill.category === activeCategory);
+
+  const totalPages = Math.ceil(filteredSkills.length / skillsPerPage);
+
+  const nextSkills = useCallback(() => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setSlideDirection("left");
+    setCurrentIndex((prev) => (prev + 1) % totalPages);
+    setTimeout(() => {
+      setIsAnimating(false);
+      setSlideDirection(null);
+    }, 500);
+  }, [isAnimating, totalPages]);
+
+  const prevSkills = useCallback(() => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setSlideDirection("right");
+    setCurrentIndex((prev) => (prev - 1 + totalPages) % totalPages);
+    setTimeout(() => {
+      setIsAnimating(false);
+      setSlideDirection(null);
+    }, 500);
+  }, [isAnimating, totalPages]);
+
+  useEffect(() => {
+    setCurrentIndex(0);
+    setSlideDirection(null);
+  }, [activeCategory]);
+
+  // Get the current and next/previous set of skills
+  const getVisibleSkills = () => {
+    const currentSkills = filteredSkills.slice(
+      currentIndex * skillsPerPage,
+      (currentIndex + 1) * skillsPerPage
+    );
+
+    const nextIndex = (currentIndex + 1) % totalPages;
+    const nextSkills = filteredSkills.slice(
+      nextIndex * skillsPerPage,
+      (nextIndex + 1) * skillsPerPage
+    );
+
+    const prevIndex = (currentIndex - 1 + totalPages) % totalPages;
+    const prevSkills = filteredSkills.slice(
+      prevIndex * skillsPerPage,
+      (prevIndex + 1) * skillsPerPage
+    );
+
+    return { currentSkills, nextSkills, prevSkills };
+  };
+
+  const {
+    currentSkills,
+    nextSkills: nextSet,
+    prevSkills: prevSet,
+  } = getVisibleSkills();
 
   return (
     <section id="skills" className="py-20">
@@ -72,11 +150,12 @@ export default function SkillsSection() {
         <div className="flex flex-wrap justify-center gap-2 mb-10">
           <button
             onClick={() => setActiveCategory("all")}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+            className={cn(
+              "px-4 py-2 rounded-full text-sm font-medium transition-colors",
               activeCategory === "all"
                 ? "bg-primary text-primary-foreground"
                 : "bg-secondary hover:bg-secondary/80"
-            }`}
+            )}
           >
             All
           </button>
@@ -84,41 +163,140 @@ export default function SkillsSection() {
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+              className={cn(
+                "px-4 py-2 rounded-full text-sm font-medium transition-colors",
                 activeCategory === category
                   ? "bg-primary text-primary-foreground"
                   : "bg-secondary hover:bg-secondary/80"
-              }`}
+              )}
             >
               {category}
             </button>
           ))}
         </div>
 
-        {/* Skills Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredSkills.map((skill) => (
-            <div
-              key={skill.id}
-              className="bg-card p-6 rounded-lg shadow-sm border border-border/50 hover:shadow-md transition-shadow animate-fade-in"
-            >
-              <h3 className="text-xl font-bold mb-2">{skill.name}</h3>
-              <p className="text-sm text-muted-foreground mb-3">
-                {skill.category}
-              </p>
+        {/* Skills Carousel */}
+        <div className="relative max-w-6xl mx-auto">
+          {/* Navigation Arrows */}
+          {totalPages > 1 && (
+            <>
+              <button
+                onClick={prevSkills}
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border shadow-lg hover:bg-background transition-colors"
+                aria-label="Previous skills"
+              >
+                <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
+              </button>
+              <button
+                onClick={nextSkills}
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border shadow-lg hover:bg-background transition-colors"
+                aria-label="Next skills"
+              >
+                <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
+              </button>
+            </>
+          )}
 
-              <div className="w-full bg-secondary rounded-full h-2.5 mb-1">
-                <div
-                  className="bg-primary h-2.5 rounded-full transition-all duration-1000 ease-out"
-                  style={{ width: `${skill.level}%` }}
-                ></div>
+          {/* Skills Grid with Animation */}
+          <div className="relative overflow-hidden">
+            <div className="relative">
+              {/* Current Skills */}
+              <div
+                className={cn(
+                  "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6",
+                  slideDirection === "left" && "animate-slide-out-left",
+                  slideDirection === "right" && "animate-slide-out-right"
+                )}
+              >
+                {currentSkills.map((skill) => (
+                  <div
+                    key={skill.id}
+                    className="bg-card p-6 rounded-lg shadow-sm border border-border/50 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
+                  >
+                    <h3 className="text-xl font-bold mb-2">{skill.name}</h3>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      {skill.category}
+                    </p>
+                    <div className="w-full bg-secondary rounded-full h-2.5 mb-1">
+                      <div
+                        className="bg-primary h-2.5 rounded-full transition-all duration-1000"
+                        style={{ width: `${skill.level}%` }}
+                      ></div>
+                    </div>
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>Proficiency</span>
+                      <span>{skill.level}%</span>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div className="flex justify-between text-xs text-muted-foreground">
-                <span>Proficiency</span>
-                <span>{skill.level}%</span>
-              </div>
+
+              {/* Next Skills */}
+              {slideDirection === "left" && (
+                <div className="absolute top-0 left-0 w-full animate-slide-in-left">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {nextSet.map((skill) => (
+                      <div
+                        key={skill.id}
+                        className="bg-card p-6 rounded-lg shadow-sm border border-border/50 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
+                      >
+                        <h3 className="text-xl font-bold mb-2">{skill.name}</h3>
+                        <p className="text-sm text-muted-foreground mb-3">
+                          {skill.category}
+                        </p>
+                        <div className="w-full bg-secondary rounded-full h-2.5 mb-1">
+                          <div
+                            className="bg-primary h-2.5 rounded-full transition-all duration-1000"
+                            style={{ width: `${skill.level}%` }}
+                          ></div>
+                        </div>
+                        <div className="flex justify-between text-xs text-muted-foreground">
+                          <span>Proficiency</span>
+                          <span>{skill.level}%</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Previous Skills */}
+              {slideDirection === "right" && (
+                <div className="absolute top-0 left-0 w-full animate-slide-in-right">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {prevSet.map((skill) => (
+                      <div
+                        key={skill.id}
+                        className="bg-card p-6 rounded-lg shadow-sm border border-border/50 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
+                      >
+                        <h3 className="text-xl font-bold mb-2">{skill.name}</h3>
+                        <p className="text-sm text-muted-foreground mb-3">
+                          {skill.category}
+                        </p>
+                        <div className="w-full bg-secondary rounded-full h-2.5 mb-1">
+                          <div
+                            className="bg-primary h-2.5 rounded-full transition-all duration-1000"
+                            style={{ width: `${skill.level}%` }}
+                          ></div>
+                        </div>
+                        <div className="flex justify-between text-xs text-muted-foreground">
+                          <span>Proficiency</span>
+                          <span>{skill.level}%</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-          ))}
+          </div>
+
+          {/* Page Counter */}
+          {totalPages > 1 && (
+            <div className="text-center mt-6 text-sm text-foreground/60">
+              Page {currentIndex + 1} of {totalPages}
+            </div>
+          )}
         </div>
       </div>
     </section>
