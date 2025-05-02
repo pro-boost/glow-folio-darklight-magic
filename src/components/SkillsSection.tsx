@@ -17,12 +17,21 @@ const defaultSkills = [
   { id: "4", name: "HTML5", category: "Frontend", level: 95 },
   { id: "5", name: "CSS3/SASS", category: "Frontend", level: 95 },
   { id: "6", name: "TailwindCSS", category: "Frontend", level: 95 },
-  { id: "7", name: "UI/UX Design", category: "Design", level: 90 },
-  { id: "8", name: "Responsive Design", category: "Design", level: 95 },
-  { id: "9", name: "Accessibility", category: "Design", level: 90 },
-  { id: "10", name: "JavaScript", category: "Frontend", level: 95 },
-  { id: "11", name: "Git", category: "Tools", level: 90 },
-  { id: "12", name: "Web Performance", category: "Frontend", level: 85 },
+  { id: "7", name: "JavaScript (ES6+)", category: "Frontend", level: 95 },
+  { id: "8", name: "Redux/State Management", category: "Frontend", level: 90 },
+  { id: "9", name: "Responsive Design", category: "Design", level: 95 },
+  { id: "10", name: "UI/UX Design", category: "Design", level: 90 },
+  { id: "11", name: "Web Accessibility", category: "Design", level: 90 },
+  { id: "12", name: "Git/GitHub", category: "Tools", level: 90 },
+  { id: "13", name: "Web Performance", category: "Frontend", level: 85 },
+  {
+    id: "14",
+    name: "Testing (Jest/React Testing Library)",
+    category: "Frontend",
+    level: 85,
+  },
+  { id: "15", name: "RESTful APIs", category: "Frontend", level: 90 },
+  { id: "16", name: "Webpack/Vite", category: "Tools", level: 85 },
 ];
 
 export default function SkillsSection() {
@@ -206,7 +215,7 @@ export default function SkillsSection() {
               {/* Current Skills */}
               <div
                 className={cn(
-                  "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6",
+                  "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 transition-transform duration-500 ease-in-out",
                   slideDirection === "left" && "animate-slide-out-left",
                   slideDirection === "right" && "animate-slide-out-right"
                 )}

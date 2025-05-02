@@ -2,8 +2,16 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import { Mail, MessageSquare, Phone, Send } from "lucide-react";
+import {
+  Mail,
+  MessageSquare,
+  Phone,
+  Send,
+  Github,
+  Linkedin,
+} from "lucide-react";
 import { useToast } from "./ui/use-toast";
+import emailjs from "emailjs-com";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -26,15 +34,61 @@ export default function ContactSection() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
-      toast({
-        title: "Message sent!",
-        description: "Thank you for reaching out. I'll get back to you soon.",
+    // Send email to yourself with client data
+    emailjs
+      .send(
+        "service_lnbaknq", // Your service ID
+        "template_6i42w2g", // Your template ID for the email you receive
+        {
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          date: new Date().toLocaleString(),
+        },
+        "u1gmD7IX6M4BMRgHD" // Your user ID
+      )
+      .then(
+        (result) => {
+          // Then send auto-reply to the client using the new template
+          emailjs
+            .send(
+              "service_lnbaknq", // Your service ID
+              "template_xc9yjas", // Your auto-reply template ID
+              {
+                name: formData.name,
+                email: formData.email,
+                message: formData.message,
+                date: new Date().toLocaleString(),
+              },
+              "u1gmD7IX6M4BMRgHD" // Your user ID
+            )
+            .then(() => {
+              toast({
+                title: "Message sent!",
+                description:
+                  "Thank you for reaching out. I'll get back to you soon.",
+              });
+              setFormData({ name: "", email: "", message: "" });
+            })
+            .catch((error) => {
+              toast({
+                title: "Error",
+                description:
+                  "There was an error sending the auto-reply. Please try again later.",
+              });
+            });
+        },
+        (error) => {
+          toast({
+            title: "Error",
+            description:
+              "There was an error sending your message. Please try again later.",
+          });
+        }
+      )
+      .finally(() => {
+        setIsSubmitting(false);
       });
-      setFormData({ name: "", email: "", message: "" });
-      setIsSubmitting(false);
-    }, 1500);
   };
 
   return (
@@ -61,7 +115,12 @@ export default function ContactSection() {
                     </div>
                     <div>
                       <p className="text-sm text-foreground/60">Email</p>
-                      <p className="font-medium">hello@johndoe.dev</p>
+                      <a
+                        href="mailto:mohamed.boudrika.95@gmail.com"
+                        className="font-medium text-foreground hover:text-primary transition-colors"
+                      >
+                        mohamed.boudrika.95@gmail.com
+                      </a>
                     </div>
                   </div>
 
@@ -71,7 +130,12 @@ export default function ContactSection() {
                     </div>
                     <div>
                       <p className="text-sm text-foreground/60">Phone</p>
-                      <p className="font-medium">+1 (555) 123-4567</p>
+                      <a
+                        href="tel:+212661880323"
+                        className="font-medium text-foreground hover:text-primary transition-colors"
+                      >
+                        +212661880323
+                      </a>
                     </div>
                   </div>
 
@@ -83,16 +147,52 @@ export default function ContactSection() {
                       <p className="text-sm text-foreground/60">Social</p>
                       <div className="flex gap-4 mt-1">
                         <a
-                          href="#"
-                          className="text-foreground/70 hover:text-primary transition-colors"
+                          href="https://x.com/NooneN2102"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-foreground hover:text-primary transition-colors"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            window.open("https://x.com/NooneN2102", "_blank");
+                          }}
                         >
-                          Twitter
+                          <svg
+                            viewBox="0 0 24 24"
+                            className="h-5 w-5 fill-current"
+                            aria-hidden="true"
+                          >
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                          </svg>
                         </a>
                         <a
-                          href="#"
-                          className="text-foreground/70 hover:text-primary transition-colors"
+                          href="https://github.com/pro-boost/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-foreground hover:text-primary transition-colors"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            window.open(
+                              "https://github.com/pro-boost/",
+                              "_blank"
+                            );
+                          }}
                         >
-                          LinkedIn
+                          <Github className="h-5 w-5" />
+                        </a>
+                        <a
+                          href="https://www.linkedin.com/in/noone-noone-96378b324/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-foreground hover:text-primary transition-colors"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            window.open(
+                              "https://www.linkedin.com/in/noone-noone-96378b324/",
+                              "_blank"
+                            );
+                          }}
+                        >
+                          <Linkedin className="h-5 w-5" />
                         </a>
                       </div>
                     </div>
