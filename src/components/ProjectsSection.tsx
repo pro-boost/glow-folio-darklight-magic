@@ -129,7 +129,7 @@ export default function ProjectsSection() {
           </p>
         </div>
 
-        <div className="relative w-[90%] md:w-[70%] lg:w-[60%] mx-auto">
+        <div className="relative w-[85%] md:w-[60%] lg:w-[50%] mx-auto">
           {/* Navigation Arrows */}
           <button
             onClick={prevProject}
