@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -10,21 +9,23 @@ export default function ContactSection() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    message: ""
+    message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const { toast } = useToast();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate form submission
     setTimeout(() => {
       toast({
@@ -43,11 +44,11 @@ export default function ContactSection() {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
           <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-8"></div>
           <p className="text-lg text-foreground/80 max-w-3xl mx-auto">
-            Have a project in mind or just want to say hello? I'd love to hear from you.
-            Feel free to reach out using the form below.
+            Have a project in mind or just want to say hello? I'd love to hear
+            from you. Feel free to reach out using the form below.
           </p>
         </div>
-        
+
         <div className="grid md:grid-cols-5 gap-12 items-start max-w-5xl mx-auto">
           <div className="md:col-span-2 animate-fade-in">
             <div className="space-y-8">
@@ -63,7 +64,7 @@ export default function ContactSection() {
                       <p className="font-medium">hello@johndoe.dev</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                       <Phone className="h-5 w-5 text-primary" />
@@ -73,7 +74,7 @@ export default function ContactSection() {
                       <p className="font-medium">+1 (555) 123-4567</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center gap-4">
                     <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                       <MessageSquare className="h-5 w-5 text-primary" />
@@ -81,26 +82,39 @@ export default function ContactSection() {
                     <div>
                       <p className="text-sm text-foreground/60">Social</p>
                       <div className="flex gap-4 mt-1">
-                        <a href="#" className="text-foreground/70 hover:text-primary transition-colors">Twitter</a>
-                        <a href="#" className="text-foreground/70 hover:text-primary transition-colors">LinkedIn</a>
+                        <a
+                          href="#"
+                          className="text-foreground/70 hover:text-primary transition-colors"
+                        >
+                          Twitter
+                        </a>
+                        <a
+                          href="#"
+                          className="text-foreground/70 hover:text-primary transition-colors"
+                        >
+                          LinkedIn
+                        </a>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              
+
               <div>
                 <h3 className="text-xl font-bold mb-3">Current Availability</h3>
                 <p className="text-foreground/80">
-                  I'm currently available for freelance work and open to new opportunities.
-                  My usual response time is within 24 hours.
+                  I'm currently available for freelance work and open to new
+                  opportunities. My usual response time is within 24 hours.
                 </p>
               </div>
             </div>
           </div>
-          
+
           <div className="md:col-span-3 animate-fade-in delay-200">
-            <form onSubmit={handleSubmit} className="space-y-6 bg-card/50 p-8 rounded-xl border">
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-6 bg-card/50 p-8 rounded-xl border"
+            >
               <div className="grid sm:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-sm font-medium">
@@ -115,7 +129,7 @@ export default function ContactSection() {
                     required
                   />
                 </div>
-                
+
                 <div className="space-y-2">
                   <label htmlFor="email" className="text-sm font-medium">
                     Your Email
@@ -131,7 +145,7 @@ export default function ContactSection() {
                   />
                 </div>
               </div>
-              
+
               <div className="space-y-2">
                 <label htmlFor="message" className="text-sm font-medium">
                   Message
@@ -146,7 +160,7 @@ export default function ContactSection() {
                   required
                 />
               </div>
-              
+
               <Button type="submit" disabled={isSubmitting} className="w-full">
                 {isSubmitting ? (
                   <span className="flex items-center gap-2">

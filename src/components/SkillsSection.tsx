@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 
 interface Skill {
@@ -9,12 +8,18 @@ interface Skill {
 }
 
 const defaultSkills = [
-  { id: "1", name: "React", category: "Frontend", level: 90 },
-  { id: "2", name: "Node.js", category: "Backend", level: 85 },
-  { id: "3", name: "TypeScript", category: "Frontend", level: 80 },
-  { id: "4", name: "MongoDB", category: "Backend", level: 75 },
-  { id: "5", name: "TailwindCSS", category: "Frontend", level: 95 },
-  { id: "6", name: "Docker", category: "DevOps", level: 70 },
+  { id: "1", name: "React", category: "Frontend", level: 95 },
+  { id: "2", name: "TypeScript", category: "Frontend", level: 90 },
+  { id: "3", name: "Next.js", category: "Frontend", level: 90 },
+  { id: "4", name: "HTML5", category: "Frontend", level: 95 },
+  { id: "5", name: "CSS3/SASS", category: "Frontend", level: 95 },
+  { id: "6", name: "TailwindCSS", category: "Frontend", level: 95 },
+  { id: "7", name: "UI/UX Design", category: "Design", level: 90 },
+  { id: "8", name: "Responsive Design", category: "Design", level: 95 },
+  { id: "9", name: "Accessibility", category: "Design", level: 90 },
+  { id: "10", name: "JavaScript", category: "Frontend", level: 95 },
+  { id: "11", name: "Git", category: "Tools", level: 90 },
+  { id: "12", name: "Web Performance", category: "Frontend", level: 85 },
 ];
 
 export default function SkillsSection() {
@@ -29,7 +34,7 @@ export default function SkillsSection() {
       try {
         const loadedSkills = JSON.parse(savedSkills) as Skill[];
         setSkills(loadedSkills);
-        
+
         // Extract unique categories with proper typing
         const uniqueCategories = Array.from(
           new Set(loadedSkills.map((skill: Skill) => skill.category))
@@ -47,9 +52,10 @@ export default function SkillsSection() {
     }
   }, []);
 
-  const filteredSkills = activeCategory === "all"
-    ? skills
-    : skills.filter(skill => skill.category === activeCategory);
+  const filteredSkills =
+    activeCategory === "all"
+      ? skills
+      : skills.filter((skill) => skill.category === activeCategory);
 
   return (
     <section id="skills" className="py-20">
@@ -97,8 +103,10 @@ export default function SkillsSection() {
               className="bg-card p-6 rounded-lg shadow-sm border border-border/50 hover:shadow-md transition-shadow animate-fade-in"
             >
               <h3 className="text-xl font-bold mb-2">{skill.name}</h3>
-              <p className="text-sm text-muted-foreground mb-3">{skill.category}</p>
-              
+              <p className="text-sm text-muted-foreground mb-3">
+                {skill.category}
+              </p>
+
               <div className="w-full bg-secondary rounded-full h-2.5 mb-1">
                 <div
                   className="bg-primary h-2.5 rounded-full transition-all duration-1000 ease-out"
