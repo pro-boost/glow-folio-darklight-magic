@@ -136,7 +136,10 @@ export default function SkillsSection() {
   } = getVisibleSkills();
 
   return (
-    <section id="skills" className="py-20">
+    <section
+      id="skills"
+      className="py-20 min-h-screen flex items-center bg-gradient-to-b from-background via-secondary/50 to-background"
+    >
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">My Skills</h2>
