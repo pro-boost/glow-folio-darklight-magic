@@ -17,51 +17,68 @@ interface Project {
 const defaultProjects = [
   {
     id: "1",
-    title: "Modern E-commerce UI",
+    title: "Memory Card Game (Pokémon)",
     description:
-      "A responsive e-commerce interface with advanced filtering, smooth animations, and accessible design patterns. Built with React and TailwindCSS.",
-    image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800",
+      "A memory card game where players match Pokémon cards. Includes multiple levels and game-over conditions. Built with React and responsive design for all screen sizes.",
+    image: "public/images/PokemonGame.png", // Add your image URL here
+    tags: [
+      "React",
+      "JavaScript",
+      "CSS",
+      "Game Logic",
+      "API Integration",
+      "Responsive Design",
+    ],
+    liveUrl: "https://pro-boost.github.io/Memory_card/", // Add live URL when available
+    githubUrl: "https://github.com/pro-boost/Memory_card", // Add GitHub URL when available
+  },
+  {
+    id: "2",
+    title: "Shopping Cart WebApp",
+    description:
+      "An e-commerce web application built with React. Users can browse products, add them to a cart, and proceed to checkout. Includes API integration and responsive design.",
+    image: "public/images/ShopingCart.jpeg", // Add your image URL here
+    tags: [
+      "React",
+      "React Router",
+      "React Context",
+      "API Integration",
+      "Responsive Design",
+    ],
+    liveUrl: "https://pro-boost.github.io/Shoping-cart/", // Add live URL when available
+    githubUrl: "https://github.com/pro-boost/Shoping-cart", // Add GitHub URL when available
+  },
+  {
+    id: "3",
+    title: "Responsive Resume Website",
+    description:
+      "A personalized resume website designed to present a professional profile, education, work experience, and skills. Built with HTML, CSS, and JavaScript, featuring light and dark themes.",
+    image: "public/images/CV.png", // Add your image URL here
+    tags: [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Responsive Design",
+      "Light/Dark Themes",
+    ],
+    liveUrl: "https://pro-boost.github.io/CV/", // Add live URL when available
+    githubUrl: "https://github.com/pro-boost/CV", // Add GitHub URL when available
+  },
+
+  {
+    id: "4",
+    title: "Military Equipment Shop",
+    description:
+      "An e-commerce web application built with React. Users can browse products, add them to a cart, and proceed to checkout. Includes API integration and responsive design.",
+    image: "public/images/StrikeGear.png",
     tags: [
       "React",
       "TypeScript",
       "TailwindCSS",
-      "Framer Motion",
-      "Accessibility",
+      "React Router",
+      "Responsive design",
+      "Emailjs",
     ],
-    liveUrl: "#",
-    githubUrl: "#",
-  },
-  {
-    id: "2",
-    title: "Interactive Dashboard",
-    description:
-      "A performant analytics dashboard with real-time data visualization, dark mode support, and responsive layouts. Implemented with Next.js and modern CSS techniques.",
-    image:
-      "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&q=80&w=800",
-    tags: ["Next.js", "TypeScript", "CSS Grid", "D3.js", "Responsive Design"],
-    liveUrl: "#",
-    githubUrl: "#",
-  },
-  {
-    id: "3",
-    title: "Design System & Component Library",
-    description:
-      "A comprehensive UI component library with accessibility features, theming support, and interactive documentation. Built with React and styled-components.",
-    image:
-      "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&q=80&w=800",
-    tags: ["React", "TypeScript", "Styled Components", "Storybook", "UI/UX"],
-    liveUrl: "#",
-    githubUrl: "#",
-  },
-  {
-    id: "4",
-    title: "AI-Powered Code Assistant",
-    description:
-      "An intelligent code assistant that helps developers write better code, with real-time suggestions and automated documentation generation.",
-    image:
-      "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800",
-    tags: ["React", "TypeScript", "OpenAI", "WebSocket", "Real-time"],
     liveUrl: "#",
     githubUrl: "#",
     isComingSoon: true,
@@ -118,7 +135,7 @@ export default function ProjectsSection() {
   };
 
   return (
-    <section id="projects" className="py-20 bg-secondary/30">
+    <section id="projects" className="pt-24 pb-12 bg-secondary/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">My Projects</h2>
@@ -133,17 +150,17 @@ export default function ProjectsSection() {
           {/* Navigation Arrows */}
           <button
             onClick={prevProject}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border shadow-lg hover:bg-background transition-colors"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group"
             aria-label="Previous project"
           >
-            <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
+            <ChevronLeft className="h-5 w-5 md:h-6 md:w-6 text-foreground/60 group-hover:text-primary transition-colors" />
           </button>
           <button
             onClick={nextProject}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border shadow-lg hover:bg-background transition-colors"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group"
             aria-label="Next project"
           >
-            <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
+            <ChevronRight className="h-5 w-5 md:h-6 md:w-6 text-foreground/60 group-hover:text-primary transition-colors" />
           </button>
 
           {/* Carousel Container */}
@@ -249,7 +266,7 @@ export default function ProjectsSection() {
         <div className="text-center mt-8 md:mt-12">
           <Button asChild variant="default" size="lg" className="rounded-full">
             <a
-              href="https://github.com"
+              href="https://github.com/pro-boost/"
               target="_blank"
               rel="noopener noreferrer"
             >

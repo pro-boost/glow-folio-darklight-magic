@@ -12,26 +12,24 @@ interface Skill {
 
 const defaultSkills = [
   { id: "1", name: "React", category: "Frontend", level: 95 },
-  { id: "2", name: "TypeScript", category: "Frontend", level: 90 },
-  { id: "3", name: "Next.js", category: "Frontend", level: 90 },
+  { id: "7", name: "JavaScript (ES6+)", category: "Frontend", level: 95 },
   { id: "4", name: "HTML5", category: "Frontend", level: 95 },
   { id: "5", name: "CSS3/SASS", category: "Frontend", level: 95 },
   { id: "6", name: "TailwindCSS", category: "Frontend", level: 95 },
-  { id: "7", name: "JavaScript (ES6+)", category: "Frontend", level: 95 },
-  { id: "8", name: "Redux/State Management", category: "Frontend", level: 90 },
   { id: "9", name: "Responsive Design", category: "Design", level: 95 },
+  { id: "2", name: "TypeScript", category: "Frontend", level: 90 },
+  { id: "8", name: "Redux/State Management", category: "Frontend", level: 90 },
+  { id: "15", name: "RESTful APIs", category: "Frontend", level: 90 },
   { id: "10", name: "UI/UX Design", category: "Design", level: 90 },
   { id: "11", name: "Web Accessibility", category: "Design", level: 90 },
   { id: "12", name: "Git/GitHub", category: "Tools", level: 90 },
-  { id: "13", name: "Web Performance", category: "Frontend", level: 85 },
   {
     id: "14",
     name: "Testing (Jest/React Testing Library)",
     category: "Frontend",
     level: 85,
   },
-  { id: "15", name: "RESTful APIs", category: "Frontend", level: 90 },
-  { id: "16", name: "Webpack/Vite", category: "Tools", level: 85 },
+  { id: "13", name: "Web Performance", category: "Frontend", level: 85 },
 ];
 
 export default function SkillsSection() {
@@ -147,7 +145,7 @@ export default function SkillsSection() {
   return (
     <section
       id="skills"
-      className="py-20 min-h-screen flex items-center bg-gradient-to-b from-background via-secondary/50 to-background"
+      className="py-12 min-h-screen flex items-center bg-gradient-to-b from-background via-secondary/50 to-background"
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 animate-fade-in">
@@ -194,17 +192,17 @@ export default function SkillsSection() {
             <>
               <button
                 onClick={prevSkills}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border shadow-lg hover:bg-background transition-colors"
+                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group"
                 aria-label="Previous skills"
               >
-                <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
+                <ChevronLeft className="h-5 w-5 md:h-6 md:w-6 text-foreground/60 group-hover:text-primary transition-colors" />
               </button>
               <button
                 onClick={nextSkills}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border shadow-lg hover:bg-background transition-colors"
+                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group"
                 aria-label="Next skills"
               >
-                <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
+                <ChevronRight className="h-5 w-5 md:h-6 md:w-6 text-foreground/60 group-hover:text-primary transition-colors" />
               </button>
             </>
           )}
@@ -215,7 +213,7 @@ export default function SkillsSection() {
               {/* Current Skills */}
               <div
                 className={cn(
-                  "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 transition-transform duration-500 ease-in-out",
+                  "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-500 ease-in-out",
                   slideDirection === "left" && "animate-slide-out-left",
                   slideDirection === "right" && "animate-slide-out-right"
                 )}
@@ -243,11 +241,17 @@ export default function SkillsSection() {
                 ))}
               </div>
 
-              {/* Next Skills */}
-              {slideDirection === "left" && (
-                <div className="absolute top-0 left-0 w-full animate-slide-in-left">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {nextSet.map((skill) => (
+              {/* Next/Previous Skills */}
+              {(slideDirection === "left" || slideDirection === "right") && (
+                <div
+                  className={cn(
+                    "absolute top-0 left-0 w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6",
+                    slideDirection === "left" && "animate-slide-in-left",
+                    slideDirection === "right" && "animate-slide-in-right"
+                  )}
+                >
+                  {(slideDirection === "left" ? nextSet : prevSet).map(
+                    (skill) => (
                       <div
                         key={skill.id}
                         className="bg-card p-6 rounded-lg shadow-sm border border-border/50 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
@@ -267,48 +271,12 @@ export default function SkillsSection() {
                           <span>{skill.level}%</span>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Previous Skills */}
-              {slideDirection === "right" && (
-                <div className="absolute top-0 left-0 w-full animate-slide-in-right">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {prevSet.map((skill) => (
-                      <div
-                        key={skill.id}
-                        className="bg-card p-6 rounded-lg shadow-sm border border-border/50 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
-                      >
-                        <h3 className="text-xl font-bold mb-2">{skill.name}</h3>
-                        <p className="text-sm text-muted-foreground mb-3">
-                          {skill.category}
-                        </p>
-                        <div className="w-full bg-secondary rounded-full h-2.5 mb-1">
-                          <div
-                            className="bg-primary h-2.5 rounded-full transition-all duration-1000"
-                            style={{ width: `${skill.level}%` }}
-                          ></div>
-                        </div>
-                        <div className="flex justify-between text-xs text-muted-foreground">
-                          <span>Proficiency</span>
-                          <span>{skill.level}%</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+                    )
+                  )}
                 </div>
               )}
             </div>
           </div>
-
-          {/* Page Counter */}
-          {totalPages > 1 && (
-            <div className="text-center mt-6 text-sm text-foreground/60">
-              Page {currentIndex + 1} of {totalPages}
-            </div>
-          )}
         </div>
       </div>
     </section>

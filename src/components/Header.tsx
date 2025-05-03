@@ -59,11 +59,8 @@ export default function Header() {
       )}
     >
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <a
-          href={homeUrl}
-          className="text-2xl font-bold font-mono text-gradient"
-        >
-          Dev<span className="text-primary">Folio</span>
+        <a href={homeUrl} className="text-2xl font-bold font-mono ">
+          Mohamed<span className="text-primary">B.</span>
         </a>
 
         {/* Desktop Navigation */}

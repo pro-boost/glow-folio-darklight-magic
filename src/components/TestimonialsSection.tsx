@@ -13,33 +13,30 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     id: "1",
-    name: "Sarah Johnson",
+    name: "Yassine Benjelloun",
     role: "Product Manager",
-    company: "TechCorp",
+    company: "Softech Solutions",
     content:
-      "Working with this developer was an absolute pleasure. Their attention to detail and commitment to creating accessible, performant web applications is impressive. They consistently delivered high-quality code and were always open to feedback.",
-    image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200",
+      "Collaborating with this developer was an incredible experience. Their expertise in creating user-friendly and high-performance web apps is remarkable. They paid attention to every detail and always adapted to our feedback, delivering top-notch results.",
+    image: "public/images/YassineBenjelloun.jpeg",
   },
   {
     id: "2",
-    name: "Michael Chen",
+    name: "Clara Dupont",
     role: "Lead Developer",
-    company: "InnovateLabs",
+    company: "TechWave",
     content:
-      "An exceptional front-end developer who brings both technical expertise and creative problem-solving to every project. Their work on our design system significantly improved our development workflow and user experience.",
-    image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200",
+      "This developer combines technical mastery with a real passion for design. Their contributions to our e-commerce platform have greatly improved both our development workflow and the overall user experience. Always reliable and innovative!",
+    image: "public/images/ClaraDupont.jpeg",
   },
   {
     id: "3",
-    name: "Emily Rodriguez",
-    role: "UX Director",
-    company: "DesignHub",
+    name: "Marco Rossi",
+    role: "UX/UI Designer",
+    company: "Pixelate Studios",
     content:
-      "Their ability to translate complex design requirements into clean, efficient code is remarkable. They consistently delivered pixel-perfect implementations while maintaining excellent performance and accessibility standards.",
-    image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200",
+      "I’ve worked with many developers, but this one stands out. Their ability to take complex design concepts and turn them into flawless code is exceptional. The result was a seamless, responsive design that performed excellently across all devices.",
+    image: "public/images/MarcoRossi.jpeg",
   },
 ];
 
@@ -47,7 +44,7 @@ export default function TestimonialsSection() {
   return (
     <section
       id="testimonials"
-      className="py-20 min-h-screen flex items-center bg-gradient-to-b from-background via-primary/20 to-background"
+      className="py-12 min-h-screen flex items-center bg-gradient-to-b from-background via-primary/20 to-background"
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 animate-fade-in">
