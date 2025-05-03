@@ -92,7 +92,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-20 min-h-screen flex items-center">
+    <section id="contact" className="py-12 min-h-screen flex items-center">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Get In Touch</h2>
@@ -116,7 +116,9 @@ export default function ContactSection() {
                     <div>
                       <p className="text-sm text-foreground/60">Email</p>
                       <a
-                        href="mailto:mohamed.boudrika.95@gmail.com"
+                        href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=mohamed.boudrika.95@gmail.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="font-medium text-foreground hover:text-primary transition-colors"
                       >
                         mohamed.boudrika.95@gmail.com
@@ -132,6 +134,8 @@ export default function ContactSection() {
                       <p className="text-sm text-foreground/60">Phone</p>
                       <a
                         href="tel:+212661880323"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="font-medium text-foreground hover:text-primary transition-colors"
                       >
                         +212661880323

@@ -5,7 +5,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center py-20 relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center py-12 relative overflow-hidden"
     >
       {/* Background blobs */}
       <div className="absolute -top-32 -left-32 w-96 h-96 blob opacity-20 animate-blob"></div>
@@ -23,7 +23,7 @@ export default function HeroSection() {
               </div>
 
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold">
-                John <span className="text-gradient">Doe</span>
+                Mohamed <span className="text-gradient">B.</span>
               </h1>
 
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-mono text-foreground/80">
@@ -57,8 +57,8 @@ export default function HeroSection() {
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 blur-2xl transform rotate-12"></div>
               <div className="relative bg-card rounded-2xl overflow-hidden shadow-xl p-1 animated-border">
                 <img
-                  src="https://images.unsplash.com/photo-1605810230434-7631ac76ec81?auto=format&fit=crop&q=80&w=800"
-                  alt="John Doe"
+                  src="public\images\HeroImg.jpg"
+                  alt="Dev"
                   className="w-full h-auto rounded-xl aspect-square object-cover"
                 />
               </div>
@@ -66,7 +66,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce-light">
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 animate-bounce-light">
           <Button
             variant="ghost"
             size="icon"

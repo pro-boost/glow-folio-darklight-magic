@@ -1,4 +1,6 @@
-import { Github, Linkedin, Mail } from "lucide-react";
+import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
+import { Mail } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -9,7 +11,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
             <a href="#home" className="text-2xl font-bold font-mono">
-              Dev<span className="text-primary">Folio</span>
+              Mohamed<span className="text-primary">B.</span>
             </a>
             <p className="text-foreground/60 mt-2">
               Creating digital experiences that inspire.
@@ -28,7 +30,7 @@ export default function Footer() {
                 window.open("https://github.com/pro-boost/", "_blank");
               }}
             >
-              <Github className="h-5 w-5" />
+              <FaGithub className="h-5 w-5" />
             </a>
             <a
               href="https://x.com/NooneN2102"
@@ -63,10 +65,21 @@ export default function Footer() {
                 );
               }}
             >
-              <Linkedin className="h-5 w-5" />
+              <FaLinkedin className="h-5 w-5" />
             </a>
             <a
-              href="mailto:mohamed.boudrika.95@gmail.com"
+              href="https://wa.me/+212661880323"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-primary/10 transition-colors"
+              aria-label="WhatsApp"
+            >
+              <FaWhatsapp className="h-5 w-5" />
+            </a>
+            <a
+              href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=mohamed.boudrika.95@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-primary/10 transition-colors"
               aria-label="Email"
             >
@@ -77,22 +90,22 @@ export default function Footer() {
 
         <div className="mt-8 pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center">
           <p className="text-sm text-foreground/60">
-            &copy; {year} Mohamed Boudrika. All rights reserved.
+            &copy; {year} Mohamed B. — MIT Licensed
           </p>
 
           <div className="flex gap-6 mt-4 md:mt-0">
-            <a
-              href="#"
+            <Link
+              to="/privacy-policy"
               className="text-sm text-foreground/60 hover:text-primary transition-colors"
             >
               Privacy Policy
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to="/terms-of-service"
               className="text-sm text-foreground/60 hover:text-primary transition-colors"
             >
               Terms of Service
-            </a>
+            </Link>
           </div>
         </div>
       </div>
