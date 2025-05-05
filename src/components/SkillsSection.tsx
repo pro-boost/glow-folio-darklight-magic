@@ -1,5 +1,5 @@
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
@@ -46,6 +46,7 @@ export default function SkillsSection() {
   const [categories, setCategories] = useState<string[]>([]);
   const [skillsPerPage, setSkillsPerPage] = useState(6);
   const [sectionHeight, setSectionHeight] = useState<string>("auto");
+  const initialRenderComplete = useRef(false);
 
   useEffect(() => {
     const savedSkills = localStorage.getItem("portfolio-skills");
@@ -84,14 +85,27 @@ export default function SkillsSection() {
     return () => window.removeEventListener("resize", updateSkillsPerPage);
   }, []);
 
-  // Calculate section height on initial render
+  // Calculate section height after initial render and skills loading
   useEffect(() => {
-    // Get initial section height when "all" category is shown
-    const sectionElement = document.getElementById("skills");
-    if (sectionElement) {
-      const height = sectionElement.offsetHeight;
-      setSectionHeight(`${height}px`);
+    // Only calculate height once after initial render and skills are loaded
+    if (!initialRenderComplete.current && skills.length > 0) {
+      // Set a small timeout to ensure the DOM has fully rendered
+      const timer = setTimeout(() => {
+        const sectionElement = document.getElementById("skills");
+        if (sectionElement) {
+          // Add a small buffer to prevent potential scrollbars
+          const height = sectionElement.offsetHeight + 20;
+          setSectionHeight(`${height}px`);
+          initialRenderComplete.current = true;
+        }
+      }, 100);
+      
+      return () => clearTimeout(timer);
     }
+  }, [skills]);
+
+  const handleCategoryChange = useCallback((category: string) => {
+    setActiveCategory(category);
   }, []);
 
   const filteredSkills =
@@ -114,7 +128,7 @@ export default function SkillsSection() {
     <section
       id="skills"
       className="py-12 min-h-screen flex items-center bg-gradient-to-b from-background via-secondary/50 to-background"
-      style={{ height: sectionHeight !== "auto" ? sectionHeight : undefined }}
+      style={{ height: sectionHeight !== "auto" ? sectionHeight : "auto" }}
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 animate-fade-in">
@@ -128,7 +142,7 @@ export default function SkillsSection() {
         {/* Category Filter */}
         <div className="flex flex-wrap justify-center gap-2 mb-10">
           <button
-            onClick={() => setActiveCategory("all")}
+            onClick={() => handleCategoryChange("all")}
             className={cn(
               "px-4 py-2 rounded-full text-sm font-medium transition-colors",
               activeCategory === "all"
@@ -141,7 +155,7 @@ export default function SkillsSection() {
           {categories.map((category) => (
             <button
               key={category}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => handleCategoryChange(category)}
               className={cn(
                 "px-4 py-2 rounded-full text-sm font-medium transition-colors",
                 activeCategory === category
