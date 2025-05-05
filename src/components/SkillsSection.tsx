@@ -1,7 +1,15 @@
+
 import { useEffect, useState, useCallback } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 interface Skill {
   id: string;
@@ -36,12 +44,7 @@ export default function SkillsSection() {
   const [skills, setSkills] = useState<Skill[]>(defaultSkills);
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [categories, setCategories] = useState<string[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
   const [skillsPerPage, setSkillsPerPage] = useState(6);
-  const [slideDirection, setSlideDirection] = useState<"left" | "right" | null>(
-    null
-  );
 
   useEffect(() => {
     const savedSkills = localStorage.getItem("portfolio-skills");
@@ -85,62 +88,11 @@ export default function SkillsSection() {
       ? skills
       : skills.filter((skill) => skill.category === activeCategory);
 
-  const totalPages = Math.ceil(filteredSkills.length / skillsPerPage);
-
-  const nextSkills = useCallback(() => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    setSlideDirection("left");
-    setCurrentIndex((prev) => (prev + 1) % totalPages);
-    setTimeout(() => {
-      setIsAnimating(false);
-      setSlideDirection(null);
-    }, 500);
-  }, [isAnimating, totalPages]);
-
-  const prevSkills = useCallback(() => {
-    if (isAnimating) return;
-    setIsAnimating(true);
-    setSlideDirection("right");
-    setCurrentIndex((prev) => (prev - 1 + totalPages) % totalPages);
-    setTimeout(() => {
-      setIsAnimating(false);
-      setSlideDirection(null);
-    }, 500);
-  }, [isAnimating, totalPages]);
-
-  useEffect(() => {
-    setCurrentIndex(0);
-    setSlideDirection(null);
-  }, [activeCategory]);
-
-  // Get the current and next/previous set of skills
-  const getVisibleSkills = () => {
-    const currentSkills = filteredSkills.slice(
-      currentIndex * skillsPerPage,
-      (currentIndex + 1) * skillsPerPage
-    );
-
-    const nextIndex = (currentIndex + 1) % totalPages;
-    const nextSkills = filteredSkills.slice(
-      nextIndex * skillsPerPage,
-      (nextIndex + 1) * skillsPerPage
-    );
-
-    const prevIndex = (currentIndex - 1 + totalPages) % totalPages;
-    const prevSkills = filteredSkills.slice(
-      prevIndex * skillsPerPage,
-      (prevIndex + 1) * skillsPerPage
-    );
-
-    return { currentSkills, nextSkills, prevSkills };
-  };
-
-  const {
-    currentSkills,
-    nextSkills: nextSet,
-    prevSkills: prevSet,
-  } = getVisibleSkills();
+  // Split skills into groups for carousel
+  const skillGroups = [];
+  for (let i = 0; i < filteredSkills.length; i += skillsPerPage) {
+    skillGroups.push(filteredSkills.slice(i, i + skillsPerPage));
+  }
 
   return (
     <section
@@ -185,73 +137,14 @@ export default function SkillsSection() {
           ))}
         </div>
 
-        {/* Skills Carousel */}
+        {/* Skills Carousel using shadcn Carousel */}
         <div className="relative max-w-6xl mx-auto">
-          {/* Navigation Arrows */}
-          {totalPages > 1 && (
-            <>
-              <button
-                onClick={prevSkills}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group"
-                aria-label="Previous skills"
-              >
-                <ChevronLeft className="h-5 w-5 md:h-6 md:w-6 text-foreground/60 group-hover:text-primary transition-colors" />
-              </button>
-              <button
-                onClick={nextSkills}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group"
-                aria-label="Next skills"
-              >
-                <ChevronRight className="h-5 w-5 md:h-6 md:w-6 text-foreground/60 group-hover:text-primary transition-colors" />
-              </button>
-            </>
-          )}
-
-          {/* Skills Grid with Animation */}
-          <div className="relative overflow-hidden">
-            <div className="relative">
-              {/* Current Skills */}
-              <div
-                className={cn(
-                  "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-500 ease-in-out",
-                  slideDirection === "left" && "animate-slide-out-left",
-                  slideDirection === "right" && "animate-slide-out-right"
-                )}
-              >
-                {currentSkills.map((skill) => (
-                  <div
-                    key={skill.id}
-                    className="bg-card p-6 rounded-lg shadow-sm border border-border/50 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
-                  >
-                    <h3 className="text-xl font-bold mb-2">{skill.name}</h3>
-                    <p className="text-sm text-muted-foreground mb-3">
-                      {skill.category}
-                    </p>
-                    <div className="w-full bg-secondary rounded-full h-2.5 mb-1">
-                      <div
-                        className="bg-primary h-2.5 rounded-full transition-all duration-1000"
-                        style={{ width: `${skill.level}%` }}
-                      ></div>
-                    </div>
-                    <div className="flex justify-between text-xs text-muted-foreground">
-                      <span>Proficiency</span>
-                      <span>{skill.level}%</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Next/Previous Skills */}
-              {(slideDirection === "left" || slideDirection === "right") && (
-                <div
-                  className={cn(
-                    "absolute top-0 left-0 w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6",
-                    slideDirection === "left" && "animate-slide-in-left",
-                    slideDirection === "right" && "animate-slide-in-right"
-                  )}
-                >
-                  {(slideDirection === "left" ? nextSet : prevSet).map(
-                    (skill) => (
+          <Carousel className="w-full">
+            <CarouselContent>
+              {skillGroups.map((group, groupIndex) => (
+                <CarouselItem key={groupIndex}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {group.map((skill) => (
                       <div
                         key={skill.id}
                         className="bg-card p-6 rounded-lg shadow-sm border border-border/50 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
@@ -271,12 +164,23 @@ export default function SkillsSection() {
                           <span>{skill.level}%</span>
                         </div>
                       </div>
-                    )
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
+                    ))}
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            
+            {skillGroups.length > 1 && (
+              <>
+                <CarouselPrevious 
+                  className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group"
+                />
+                <CarouselNext 
+                  className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group"
+                />
+              </>
+            )}
+          </Carousel>
         </div>
       </div>
     </section>
