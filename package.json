@@ -1,7 +1,6 @@
 {
-  "name": "vite_react_shadcn_ts",
+  "name": "glow-folio-darklight-magic",
   "homepage": "https://github.com/pro-boost/glow-folio-darklight-magic",
-  "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
