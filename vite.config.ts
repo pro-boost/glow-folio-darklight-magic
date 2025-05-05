@@ -4,7 +4,7 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
-  base: "/glow-folio-darklight-magic/",
+  base: mode === "development" ? "/" : "/glow-folio-darklight-magic/",
   server: {
     host: "::",
     port: 8080,
