@@ -45,6 +45,7 @@ export default function SkillsSection() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [categories, setCategories] = useState<string[]>([]);
   const [skillsPerPage, setSkillsPerPage] = useState(6);
+  const [sectionHeight, setSectionHeight] = useState<string>("auto");
 
   useEffect(() => {
     const savedSkills = localStorage.getItem("portfolio-skills");
@@ -83,6 +84,16 @@ export default function SkillsSection() {
     return () => window.removeEventListener("resize", updateSkillsPerPage);
   }, []);
 
+  // Calculate section height on initial render
+  useEffect(() => {
+    // Get initial section height when "all" category is shown
+    const sectionElement = document.getElementById("skills");
+    if (sectionElement) {
+      const height = sectionElement.offsetHeight;
+      setSectionHeight(`${height}px`);
+    }
+  }, []);
+
   const filteredSkills =
     activeCategory === "all"
       ? skills
@@ -94,10 +105,16 @@ export default function SkillsSection() {
     skillGroups.push(filteredSkills.slice(i, i + skillsPerPage));
   }
 
+  // Ensure we have at least one group with empty placeholders if needed
+  if (skillGroups.length === 0) {
+    skillGroups.push(Array(skillsPerPage).fill(null));
+  }
+
   return (
     <section
       id="skills"
       className="py-12 min-h-screen flex items-center bg-gradient-to-b from-background via-secondary/50 to-background"
+      style={{ height: sectionHeight !== "auto" ? sectionHeight : undefined }}
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 animate-fade-in">
@@ -144,25 +161,34 @@ export default function SkillsSection() {
               {skillGroups.map((group, groupIndex) => (
                 <CarouselItem key={groupIndex}>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {group.map((skill) => (
+                    {group.map((skill, idx) => (
                       <div
-                        key={skill.id}
+                        key={skill ? skill.id : `empty-${idx}`}
                         className="bg-card p-6 rounded-lg shadow-sm border border-border/50 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
                       >
-                        <h3 className="text-xl font-bold mb-2">{skill.name}</h3>
-                        <p className="text-sm text-muted-foreground mb-3">
-                          {skill.category}
-                        </p>
-                        <div className="w-full bg-secondary rounded-full h-2.5 mb-1">
-                          <div
-                            className="bg-primary h-2.5 rounded-full transition-all duration-1000"
-                            style={{ width: `${skill.level}%` }}
-                          ></div>
-                        </div>
-                        <div className="flex justify-between text-xs text-muted-foreground">
-                          <span>Proficiency</span>
-                          <span>{skill.level}%</span>
-                        </div>
+                        {skill ? (
+                          <>
+                            <h3 className="text-xl font-bold mb-2">{skill.name}</h3>
+                            <p className="text-sm text-muted-foreground mb-3">
+                              {skill.category}
+                            </p>
+                            <div className="w-full bg-secondary rounded-full h-2.5 mb-1">
+                              <div
+                                className="bg-primary h-2.5 rounded-full transition-all duration-1000"
+                                style={{ width: `${skill.level}%` }}
+                              ></div>
+                            </div>
+                            <div className="flex justify-between text-xs text-muted-foreground">
+                              <span>Proficiency</span>
+                              <span>{skill.level}%</span>
+                            </div>
+                          </>
+                        ) : (
+                          // Empty placeholder to maintain consistent height
+                          <div className="h-[140px] flex items-center justify-center">
+                            <p className="text-muted-foreground/50 italic">No skill</p>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>
