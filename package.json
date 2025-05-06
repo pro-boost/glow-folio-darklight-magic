@@ -1,6 +1,6 @@
 {
   "name": "glow-folio-darklight-magic",
-  "homepage": "https://github.com/pro-boost/glow-folio-darklight-magic",
+  "homepage": "https://pro-boost.github.io/glow-folio-darklight-magic/",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "gh-pages:setup": "npm install --save-dev gh-pages && echo 'node_modules/gh-pages' >> .gitignore"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

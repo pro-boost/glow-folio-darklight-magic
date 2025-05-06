@@ -4,10 +4,9 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
-  base: '/glow-folio-darklight-magic/',
+  base: '/',
   build: {
     outDir: 'dist',
-    // Remove the incorrect index line
   },
   plugins: [
     react(),
@@ -19,3 +18,4 @@ export default defineConfig(({ mode }) => ({
     },
   },
 }));
+
