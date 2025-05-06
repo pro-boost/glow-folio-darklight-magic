@@ -49,6 +49,21 @@ export default function Header() {
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
+  // Handle scrolling to sections when clicking on anchor links
+  const handleNavClick = (href: string) => {
+    if (href.startsWith("#")) {
+      const sectionId = href.substring(1);
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+      setActiveSection(sectionId); // Update active section
+    }
+  };
+
   return (
     <header
       className={cn(
@@ -59,7 +74,7 @@ export default function Header() {
       )}
     >
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <a href={homeUrl} className="text-2xl font-bold font-mono ">
+        <a href={homeUrl} className="text-2xl font-bold font-mono">
           Mohamed<span className="text-primary">B.</span>
         </a>
 
@@ -74,7 +89,7 @@ export default function Header() {
                   "text-foreground/80 hover:text-primary transition-colors font-medium",
                   activeSection === link.href.substring(1) && "text-primary"
                 )}
-                onClick={() => setActiveSection(link.href.substring(1))}
+                onClick={() => handleNavClick(link.href)}
               >
                 {link.name}
               </a>
@@ -123,7 +138,7 @@ export default function Header() {
                     activeSection === link.href.substring(1) && "text-primary"
                   )}
                   onClick={() => {
-                    setActiveSection(link.href.substring(1));
+                    handleNavClick(link.href);
                     closeMobileMenu();
                   }}
                 >
