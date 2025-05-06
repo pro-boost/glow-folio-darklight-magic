@@ -3,8 +3,10 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
-export default defineConfig(({ mode }) => ({
-  base: '/',
+export default defineConfig(({ command, mode }) => ({
+  // Use conditional base path depending on environment
+  base: command === 'serve' ? '/' : '/glow-folio-darklight-magic/',
+  
   build: {
     outDir: 'dist',
   },
@@ -18,4 +20,3 @@ export default defineConfig(({ mode }) => ({
     },
   },
 }));
-
