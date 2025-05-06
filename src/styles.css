@@ -1,492 +1,75 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  :root {
-    --background: 210 40% 98%;
-    --foreground: 240 10% 3.9%;
-    
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    
-    --primary: 260 84% 74%;
-    --primary-foreground: 0 0% 98%;
-    
-    --secondary: 260 40% 96.1%;
-    --secondary-foreground: 260 47.4% 11.2%;
-    
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 260 84% 70%;
-    
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 240 10% 5%;
-    --foreground: 0 0% 98%;
-    
-    --card: 240 10% 8%;
-    --card-foreground: 0 0% 98%;
-    
-    --popover: 240 10% 8%;
-    --popover-foreground: 0 0% 98%;
-    
-    --primary: 260 84% 70%;
-    --primary-foreground: 0 0% 98%;
-    
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 260 84% 70%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  
-  body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
-    scroll-behavior: smooth;
-    overflow-y: auto;
-    scroll-padding-top: 80px; /* Adjust based on your header height */
-  }
-  
-  html {
-    @apply scroll-smooth;
-    scroll-snap-type: y proximity;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-mono tracking-tight;
-  }
-
-  /* Scroll snap sections */
-  section {
-    scroll-snap-align: start;
-    scroll-margin-top: 80px; /* Adjust based on your header height */
-  }
-}
-
-@layer components {
-  /* Smooth section transitions */
-  section {
-    transition: opacity 0.3s ease-in-out;
-  }
-
-  section.active {
-    opacity: 1;
-  }
-  
-  .text-gradient {
-    @apply bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent;
-  }
-  
-  .bg-gradient-card {
-    @apply bg-gradient-to-br from-card to-background/70 backdrop-blur-sm;
-  }
-
-  .animated-border {
-    @apply relative overflow-hidden rounded-xl transition-all;
-  }
-
-  .animated-border::before {
-    @apply absolute inset-0 rounded-xl p-[1px] opacity-0 transition-all duration-300 ease-in-out;
-    background: linear-gradient(
-      135deg,
-      hsl(var(--primary)) 0%,
-      transparent 20%,
-      transparent 80%,
-      hsl(var(--primary)) 100%
-    );
-    content: "";
-    z-index: 0;
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-  }
-
-  .animated-border:hover::before {
-    @apply opacity-100;
-    animation: border-rotation 2s linear infinite;
-  }
-
-  @keyframes border-rotation {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
-  .blob {
-    background-image: radial-gradient(
-      circle at center,
-      hsl(var(--primary) / 0.8) 0%,
-      hsl(var(--primary) / 0) 50%
-    );
-    filter: blur(40px);
-  }
-
-  /* 3D Carousel Styles */
-  .perspective-1000 {
-    perspective: 2000px;
-    transform-style: preserve-3d;
-  }
-
-  /* Carousel Styles */
-  .carousel-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: transform 0.6s ease-in-out;
-  }
-
-  .carousel-item {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    transition: all 0.6s ease-in-out;
-    transform-style: preserve-3d;
-    backface-visibility: hidden;
-  }
-
-  .carousel-item-center {
-    transform: translateX(0) scale(1) translateZ(0);
-    z-index: 3;
-    opacity: 1;
-  }
-
-  .carousel-item-left {
-    transform: translateX(-70%) scale(0.75) translateZ(-100px) rotateY(20deg);
-    z-index: 2;
-    opacity: 0.6;
-  }
-
-  .carousel-item-right {
-    transform: translateX(70%) scale(0.75) translateZ(-100px) rotateY(-20deg);
-    z-index: 2;
-    opacity: 0.6;
-  }
-
-  .carousel-item-hidden {
-    transform: translateX(0) scale(0.5) translateZ(-200px);
-    z-index: 1;
+@keyframes fadeIn {
+  from {
     opacity: 0;
-    pointer-events: none;
+    transform: translateY(20px);
   }
-
-  /* Hover Effects */
-  .carousel-item:hover {
-    z-index: 4;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
 
-  .carousel-item-center:hover {
-    transform: translateX(0) scale(1.02) translateZ(20px);
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
   }
-
-  .carousel-item-left:hover {
-    transform: translateX(-70%) scale(0.8) translateZ(-50px) rotateY(20deg);
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
+}
 
-  .carousel-item-right:hover {
-    transform: translateX(70%) scale(0.8) translateZ(-50px) rotateY(-20deg);
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.6s ease-out forwards;
+}
+
+/* Animated border for project cards */
+.animated-border {
+  position: relative;
+}
+
+.animated-border::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    var(--angle, 0deg),
+    var(--accent-color, #0284c7) 0%,
+    transparent 65%,
+    transparent 100%
+  );
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.animated-border:hover::before {
+  opacity: 1;
+  animation: rotate 3s linear infinite;
+}
+
+@keyframes rotate {
+  to {
+    --angle: 360deg;
   }
+}
 
-  /* Navigation Buttons */
-  .carousel-nav-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .carousel-nav-button:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-50%) scale(1.1);
-  }
-
-  .carousel-nav-button:active {
-    transform: translateY(-50%) scale(0.95);
-  }
-
-  /* Project Card Styles */
-  .project-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    width: 100%;
-    max-width: 400px;
-    margin: 0 auto;
-  }
-
-  .project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  }
-
-  /* Coming Soon Badge */
-  .coming-soon-badge {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    z-index: 20;
-  }
-
-  @media (min-width: 768px) {
-    .carousel-nav-button {
-      width: 48px;
-      height: 48px;
-    }
-
-    .coming-soon-badge {
-      top: 16px;
-      right: 16px;
-      padding: 6px 12px;
-      font-size: 0.875rem;
-    }
-  }
-
-  /* Skills Carousel Styles */
-  .skills-carousel {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .skills-grid {
-    display: grid;
-    gap: 1.5rem;
-    transition: transform 0.3s ease-in-out;
-  }
-
-  .skill-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-    transition: all 0.3s ease;
-  }
-
-  .skill-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    border-color: hsl(var(--primary) / 0.5);
-  }
-
-  .skill-progress {
-    width: 100%;
-    height: 0.5rem;
-    background: hsl(var(--secondary));
-    border-radius: 9999px;
-    overflow: hidden;
-  }
-
-  .skill-progress-bar {
-    height: 100%;
-    background: hsl(var(--primary));
-    border-radius: 9999px;
-    transition: width 1s ease-out;
-  }
-
-  .skills-nav-button {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .skills-nav-button:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-50%) scale(1.1);
-  }
-
-  .skills-nav-button:active {
-    transform: translateY(-50%) scale(0.95);
-  }
-
-  @media (min-width: 768px) {
-    .skills-nav-button {
-      width: 48px;
-      height: 48px;
-    }
-  }
-
-  /* Skills Carousel Animations */
-  @keyframes slideOutLeft {
-    0% {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    100% {
-      transform: translateX(-100%);
-      opacity: 0;
-    }
-  }
-
-  @keyframes slideOutRight {
-    0% {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    100% {
-      transform: translateX(100%);
-      opacity: 0;
-    }
-  }
-
-  @keyframes slideInLeft {
-    0% {
-      transform: translateX(100%);
-      opacity: 0;
-    }
-    100% {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes slideInRight {
-    0% {
-      transform: translateX(-100%);
-      opacity: 0;
-    }
-    100% {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-
-  .animate-slide-out-left {
-    animation: slideOutLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    position: absolute;
-    width: 100%;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .animate-slide-out-right {
-    animation: slideOutRight 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    position: absolute;
-    width: 100%;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  .animate-slide-in-left {
-    animation: slideInLeft 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    position: absolute;
-    width: 100%;
-    z-index: 2;
-  }
-
-  .animate-slide-in-right {
-    animation: slideInRight 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-    position: absolute;
-    width: 100%;
-    z-index: 2;
-  }
-
-  /* Skills Grid Container */
-  .skills-grid-container {
-    position: relative;
-    overflow: hidden;
-    min-height: 400px;
-  }
-
-  .skills-grid {
-    display: grid;
-    gap: 1.5rem;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform;
-  }
-
-  .skill-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 0.75rem;
-    padding: 1.5rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .skill-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    border-color: hsl(var(--primary) / 0.5);
-  }
-
-  .skill-progress {
-    width: 100%;
-    height: 0.5rem;
-    background: hsl(var(--secondary));
-    border-radius: 9999px;
-    overflow: hidden;
-  }
-
-  .skill-progress-bar {
-    height: 100%;
-    background: hsl(var(--primary));
-    border-radius: 9999px;
-    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-  }
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
 }
