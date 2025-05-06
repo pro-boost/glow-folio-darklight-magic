@@ -151,13 +151,13 @@ export default function ContactSection() {
                       <p className="text-sm text-foreground/60">Social</p>
                       <div className="flex gap-4 mt-1">
                         <a
-                          href="https://x.com/NooneN2102"
+                          href="https://x.com/Pro_boost_/"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-foreground hover:text-primary transition-colors"
                           onClick={(e) => {
                             e.preventDefault();
-                            window.open("https://x.com/NooneN2102", "_blank");
+                            window.open("https://x.com/Pro_boost_/", "_blank");
                           }}
                         >
                           <svg
@@ -184,14 +184,14 @@ export default function ContactSection() {
                           <Github className="h-5 w-5" />
                         </a>
                         <a
-                          href="https://www.linkedin.com/in/noone-noone-96378b324/"
+                          href="https://www.linkedin.com/in/mohamed-b-96378b324/"
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-foreground hover:text-primary transition-colors"
                           onClick={(e) => {
                             e.preventDefault();
                             window.open(
-                              "https://www.linkedin.com/in/noone-noone-96378b324/",
+                              "https://www.linkedin.com/in/mohamed-b-96378b324/",
                               "_blank"
                             );
                           }}

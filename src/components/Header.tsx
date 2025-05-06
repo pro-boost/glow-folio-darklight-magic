@@ -4,6 +4,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -20,49 +21,33 @@ export default function Header() {
   const [activeSection, setActiveSection] = useState("home");
   const location = useLocation();
 
+  const navLinks = [
+    { name: "Home", href: "/" },
+    { name: "About", href: "/about" },
+    { name: "Skills", href: "/skills" },
+    { name: "Projects", href: "/projects" },
+    { name: "Testimonials", href: "/testimonials" },
+    { name: "Contact", href: "/contact" },
+  ];
+
   const isAdminPage = location.pathname === "/admin";
-  const homeUrl = isAdminPage ? "/" : "#home";
 
   useEffect(() => {
+    // Handle scroll events for styling only (not for section detection)
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
-
-      // Update active section based on scroll position
-      const sections = navLinks.map((link) => link.href.substring(1));
-      const currentSection = sections.find((section) => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
-        }
-        return false;
-      });
-
-      if (currentSection) {
-        setActiveSection(currentSection);
-      }
     };
+
+    // Extract the current section from the path
+    const currentPath =
+      location.pathname === "/" ? "home" : location.pathname.substring(1);
+    setActiveSection(currentPath);
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location]);
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
-
-  // Handle scrolling to sections when clicking on anchor links
-  const handleNavClick = (href: string) => {
-    if (href.startsWith("#")) {
-      const sectionId = href.substring(1);
-      const section = document.getElementById(sectionId);
-      if (section) {
-        section.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      }
-      setActiveSection(sectionId); // Update active section
-    }
-  };
 
   return (
     <header
@@ -74,33 +59,35 @@ export default function Header() {
       )}
     >
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <a href={homeUrl} className="text-2xl font-bold font-mono">
+        <Link to="/" className="text-2xl font-bold font-mono">
           Mohamed<span className="text-primary">B.</span>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
           {!isAdminPage &&
             navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
+                to={link.href}
                 className={cn(
                   "text-foreground/80 hover:text-primary transition-colors font-medium",
-                  activeSection === link.href.substring(1) && "text-primary"
+                  (activeSection === link.href.substring(1) ||
+                    (link.href === "/" && activeSection === "home")) &&
+                    "text-primary"
                 )}
-                onClick={() => handleNavClick(link.href)}
+                onClick={closeMobileMenu}
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
           {isAdminPage && (
-            <a
-              href="/"
+            <Link
+              to="/"
               className="text-foreground/80 hover:text-primary transition-colors font-medium"
             >
               Back to Site
-            </a>
+            </Link>
           )}
           <ThemeToggle />
         </nav>
