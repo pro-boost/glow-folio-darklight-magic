@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => ({
   base: '/glow-folio-darklight-magic/',
   build: {
     outDir: 'dist',
-    index: 'src/index.html',
+    // Remove the incorrect index line
   },
   plugins: [
     react(),
