@@ -40,7 +40,7 @@ export default function AboutSection() {
 
         <div className="max-w-4xl mx-auto mb-12">
           <div className="animate-fade-in">
-            <p className="text-lg text-foreground/80 leading-relaxed text-justify">
+            <p className="text-lg text-foreground/80 leading-relaxed ">
               I’m a passionate front-end developer specializing in creating
               polished, accessible, and production-ready web interfaces. With
               expertise in React and TypeScript, I craft complex,
