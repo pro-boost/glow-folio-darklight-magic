@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
@@ -99,7 +98,7 @@ export default function SkillsSection() {
           initialRenderComplete.current = true;
         }
       }, 100);
-      
+
       return () => clearTimeout(timer);
     }
   }, [skills]);
@@ -127,7 +126,7 @@ export default function SkillsSection() {
   return (
     <section
       id="skills"
-      className="py-12 min-h-screen flex items-center bg-gradient-to-b from-background via-secondary/50 to-background"
+      className="py-12  min-h-screen flex items-center bg-gradient-to-b from-background via-secondary/50 to-background"
       style={{ height: sectionHeight !== "auto" ? sectionHeight : "auto" }}
     >
       <div className="container mx-auto px-4">
@@ -174,7 +173,7 @@ export default function SkillsSection() {
             <CarouselContent>
               {skillGroups.map((group, groupIndex) => (
                 <CarouselItem key={groupIndex}>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 grid-rows-2">
                     {group.map((skill, idx) => (
                       <div
                         key={skill ? skill.id : `empty-${idx}`}
@@ -182,7 +181,9 @@ export default function SkillsSection() {
                       >
                         {skill ? (
                           <>
-                            <h3 className="text-xl font-bold mb-2">{skill.name}</h3>
+                            <h3 className="text-xl font-bold mb-2">
+                              {skill.name}
+                            </h3>
                             <p className="text-sm text-muted-foreground mb-3">
                               {skill.category}
                             </p>
@@ -200,7 +201,9 @@ export default function SkillsSection() {
                         ) : (
                           // Empty placeholder to maintain consistent height
                           <div className="h-[140px] flex items-center justify-center">
-                            <p className="text-muted-foreground/50 italic">No skill</p>
+                            <p className="text-muted-foreground/50 italic">
+                              No skill
+                            </p>
                           </div>
                         )}
                       </div>
@@ -209,15 +212,11 @@ export default function SkillsSection() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            
+
             {skillGroups.length > 1 && (
               <>
-                <CarouselPrevious 
-                  className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group"
-                />
-                <CarouselNext 
-                  className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group"
-                />
+                <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group" />
+                <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group" />
               </>
             )}
           </Carousel>
