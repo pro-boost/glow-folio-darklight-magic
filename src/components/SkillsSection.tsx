@@ -126,7 +126,7 @@ export default function SkillsSection() {
   return (
     <section
       id="skills"
-      className="py-12  min-h-screen flex items-center bg-gradient-to-b from-background via-secondary/50 to-background"
+      className="py-12 min-h-screen flex items-center bg-gradient-to-b from-background via-secondary/50 to-background"
       style={{ height: sectionHeight !== "auto" ? sectionHeight : "auto" }}
     >
       <div className="container mx-auto px-4">
