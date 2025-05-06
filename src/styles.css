@@ -73,3 +73,11 @@
   initial-value: 0deg;
   inherits: false;
 }
+
+/* Add smooth scrolling to html */
+html {
+  scroll-behavior: smooth;
+  
+  /* Add offset for fixed header */
+  scroll-padding-top: 5rem;
+}
