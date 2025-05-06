@@ -2,6 +2,14 @@ import { useEffect, useState, useCallback } from "react";
 import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "./ui/carousel";
 
 interface Project {
   id: string;
@@ -104,6 +112,7 @@ export default function ProjectsSection() {
   const getProjectIndex = (index: number) => {
     return (index + projects.length) % projects.length;
   };
+  const isMobile = useIsMobile();
 
   const nextProject = useCallback(() => {
     if (isAnimating) return;
@@ -145,124 +154,210 @@ export default function ProjectsSection() {
             challenges and solutions using various technologies.
           </p>
         </div>
-
-        <div className="relative w-[85%] md:w-[60%] lg:w-[50%] mx-auto">
-          {/* Navigation Arrows */}
-          <button
-            onClick={prevProject}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group"
-            aria-label="Previous project"
-          >
-            <ChevronLeft className="h-5 w-5 md:h-6 md:w-6 text-foreground/60 group-hover:text-primary transition-colors" />
-          </button>
-          <button
-            onClick={nextProject}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group"
-            aria-label="Next project"
-          >
-            <ChevronRight className="h-5 w-5 md:h-6 md:w-6 text-foreground/60 group-hover:text-primary transition-colors" />
-          </button>
-
-          {/* Carousel Container */}
-          <div className="relative h-[500px] md:h-[600px] overflow-visible perspective-1000">
-            <div className="carousel-container">
-              {projects.map((project, index) => (
-                <div
-                  key={project.id}
-                  className={cn("carousel-item", getProjectClass(index))}
-                >
-                  <div
-                    className={cn(
-                      "group bg-card border border-border/50 rounded-xl overflow-hidden shadow-sm transition-all hover:shadow-lg h-full max-w-[400px] mx-auto",
-                      "animated-border"
-                    )}
-                  >
-                    {project.isComingSoon && (
-                      <div className="absolute top-4 right-4 z-20 bg-primary/90 text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
-                        Coming Soon
+        {isMobile ? (
+          // Mobile view - Carousel
+          <div className="max-w-md mx-auto">
+            <Carousel className="w-full">
+              <CarouselContent>
+                {projects.map((project) => (
+                  <CarouselItem key={project.id}>
+                    <div className="relative bg-card border border-border/50 rounded-xl overflow-hidden shadow-sm transition-all hover:shadow-lg">
+                      {project.isComingSoon && (
+                        <div className="absolute top-4 right-4 z-20 bg-primary/90 text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
+                          Coming Soon
+                        </div>
+                      )}
+                      <div
+                        className={cn(
+                          "h-48 overflow-hidden",
+                          project.isComingSoon && "blur-sm"
+                        )}
+                      >
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover transition-transform duration-500"
+                        />
                       </div>
-                    )}
+                      <div className="p-4">
+                        <h3 className="text-lg font-bold mb-2 text-primary">
+                          {project.title}
+                        </h3>
+                        <div className={cn(project.isComingSoon && "blur-sm")}>
+                          <p className="text-sm text-foreground/70 mb-4">
+                            {project.description}
+                          </p>
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {project.tags.map((tag, idx) => (
+                              <span
+                                key={idx}
+                                className="px-2 py-0.5 bg-secondary rounded-full text-xs font-medium"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              asChild
+                              variant="outline"
+                              size="sm"
+                              className="text-xs"
+                            >
+                              <a
+                                href={project.liveUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <ExternalLink className="w-4 h-4 mr-1" /> Live
+                              </a>
+                            </Button>
+                            <Button
+                              asChild
+                              variant="outline"
+                              size="sm"
+                              className="text-xs"
+                            >
+                              <a
+                                href={project.githubUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Github className="w-4 h-4 mr-1" /> GitHub
+                              </a>
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+
+              <div className="flex justify-center gap-2 mt-6">
+                <CarouselPrevious className="relative inset-0 translate-x-0 translate-y-0 md:transform-none h-8 w-8 rounded-full" />
+                <CarouselNext className="relative inset-0 translate-x-0 translate-y-0 md:transform-none h-8 w-8 rounded-full" />
+              </div>
+            </Carousel>
+          </div>
+        ) : (
+          <div className="relative w-[85%] md:w-[60%] lg:w-[50%] mx-auto">
+            {/* Navigation Arrows */}
+            <button
+              onClick={prevProject}
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group"
+              aria-label="Previous project"
+            >
+              <ChevronLeft className="h-5 w-5 md:h-6 md:w-6 text-foreground/60 group-hover:text-primary transition-colors" />
+            </button>
+            <button
+              onClick={nextProject}
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group"
+              aria-label="Next project"
+            >
+              <ChevronRight className="h-5 w-5 md:h-6 md:w-6 text-foreground/60 group-hover:text-primary transition-colors" />
+            </button>
+
+            {/* Carousel Container */}
+            <div className="relative h-[500px] md:h-[600px] overflow-visible perspective-1000">
+              <div className="carousel-container">
+                {projects.map((project, index) => (
+                  <div
+                    key={project.id}
+                    className={cn("carousel-item", getProjectClass(index))}
+                  >
                     <div
                       className={cn(
-                        "h-48 sm:h-56 md:h-64 overflow-hidden",
-                        project.isComingSoon && "blur-sm"
+                        "group bg-card border border-border/50 rounded-xl overflow-hidden shadow-sm transition-all hover:shadow-lg h-full max-w-[400px] mx-auto",
+                        "animated-border"
                       )}
                     >
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    </div>
-
-                    <div className="p-4 md:p-6">
-                      <h3 className="text-lg md:text-xl font-bold mb-2 group-hover:text-primary transition-colors relative z-10">
-                        {project.title}
-                      </h3>
-                      <div className={cn(project.isComingSoon && "blur-sm")}>
-                        <p className="text-sm md:text-base text-foreground/70 mb-4">
-                          {project.description}
-                        </p>
-
-                        <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
-                          {project.tags.map((tag, tagIdx) => (
-                            <span
-                              key={tagIdx}
-                              className="px-2 py-0.5 md:px-3 md:py-1 bg-secondary rounded-full text-xs font-medium"
-                            >
-                              {tag}
-                            </span>
-                          ))}
+                      {project.isComingSoon && (
+                        <div className="absolute top-4 right-4 z-20 bg-primary/90 text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
+                          Coming Soon
                         </div>
+                      )}
+                      <div
+                        className={cn(
+                          "h-48 sm:h-56 md:h-64 overflow-hidden",
+                          project.isComingSoon && "blur-sm"
+                        )}
+                      >
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      </div>
 
-                        <div className="flex gap-3 md:gap-4">
-                          <Button
-                            asChild
-                            variant="outline"
-                            size="sm"
-                            className="text-xs md:text-sm"
-                          >
-                            <a
-                              href={project.liveUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-1.5 md:gap-2"
+                      <div className="p-4 md:p-6">
+                        <h3 className="text-lg md:text-xl font-bold mb-2 group-hover:text-primary transition-colors relative z-10">
+                          {project.title}
+                        </h3>
+                        <div className={cn(project.isComingSoon && "blur-sm")}>
+                          <p className="text-sm md:text-base text-foreground/70 mb-4">
+                            {project.description}
+                          </p>
+
+                          <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
+                            {project.tags.map((tag, tagIdx) => (
+                              <span
+                                key={tagIdx}
+                                className="px-2 py-0.5 md:px-3 md:py-1 bg-secondary rounded-full text-xs font-medium"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+
+                          <div className="flex gap-3 md:gap-4">
+                            <Button
+                              asChild
+                              variant="outline"
+                              size="sm"
+                              className="text-xs md:text-sm"
                             >
-                              <ExternalLink className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                              Live Demo
-                            </a>
-                          </Button>
-                          <Button
-                            asChild
-                            variant="outline"
-                            size="sm"
-                            className="text-xs md:text-sm"
-                          >
-                            <a
-                              href={project.githubUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center gap-1.5 md:gap-2"
+                              <a
+                                href={project.liveUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-1.5 md:gap-2"
+                              >
+                                <ExternalLink className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                                Live Demo
+                              </a>
+                            </Button>
+                            <Button
+                              asChild
+                              variant="outline"
+                              size="sm"
+                              className="text-xs md:text-sm"
                             >
-                              <Github className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                              Code
-                            </a>
-                          </Button>
+                              <a
+                                href={project.githubUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-1.5 md:gap-2"
+                              >
+                                <Github className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                                Code
+                              </a>
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+            </div>
+
+            {/* Project Counter */}
+            <div className="text-center mt-4 md:mt-6 text-xs md:text-sm text-foreground/60">
+              Project {currentIndex + 1} of {projects.length}
             </div>
           </div>
-
-          {/* Project Counter */}
-          <div className="text-center mt-4 md:mt-6 text-xs md:text-sm text-foreground/60">
-            Project {currentIndex + 1} of {projects.length}
-          </div>
-        </div>
-
+        )}
         <div className="text-center mt-8 md:mt-12">
           <Button asChild variant="default" size="lg" className="rounded-full">
             <a
