@@ -26,7 +26,7 @@ const testimonials: Testimonial[] = [
     company: "Softech Solutions",
     content:
       "Collaborating with this developer was an incredible experience. Their expertise in creating user-friendly and high-performance web apps is remarkable. They paid attention to every detail and always adapted to our feedback, delivering top-notch results.",
-    image: "/images/YassineBenjelloun.jpeg",
+    image: "images/YassineBenjelloun.jpeg",
   },
   {
     id: "2",
@@ -35,7 +35,7 @@ const testimonials: Testimonial[] = [
     company: "TechWave",
     content:
       "This developer combines technical mastery with a real passion for design. Their contributions to our e-commerce platform have greatly improved both our development workflow and the overall user experience. Always reliable and innovative!",
-    image: "/images/ClaraDupont.jpeg",
+    image: "images/ClaraDupont.jpeg",
   },
   {
     id: "3",
@@ -44,7 +44,7 @@ const testimonials: Testimonial[] = [
     company: "Pixelate Studios",
     content:
       "I've worked with many developers, but this one stands out. Their ability to take complex design concepts and turn them into flawless code is exceptional. The result was a seamless, responsive design that performed excellently across all devices.",
-    image: "/images/MarcoRossi.jpeg",
+    image: "images/MarcoRossi.jpeg",
   },
 ];
 
