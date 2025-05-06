@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback, useRef } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "./ui/button";
+
 import { cn } from "@/lib/utils";
 import {
   Carousel,
@@ -44,8 +43,6 @@ export default function SkillsSection() {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [categories, setCategories] = useState<string[]>([]);
   const [skillsPerPage, setSkillsPerPage] = useState(6);
-  const [sectionHeight, setSectionHeight] = useState<string>("auto");
-  const initialRenderComplete = useRef(false);
 
   useEffect(() => {
     const savedSkills = localStorage.getItem("portfolio-skills");
@@ -71,7 +68,7 @@ export default function SkillsSection() {
   useEffect(() => {
     const updateSkillsPerPage = () => {
       if (window.innerWidth < 640) {
-        setSkillsPerPage(3);
+        setSkillsPerPage(2);
       } else if (window.innerWidth < 1024) {
         setSkillsPerPage(4);
       } else {
@@ -83,25 +80,6 @@ export default function SkillsSection() {
     window.addEventListener("resize", updateSkillsPerPage);
     return () => window.removeEventListener("resize", updateSkillsPerPage);
   }, []);
-
-  // Calculate section height after initial render and skills loading
-  useEffect(() => {
-    // Only calculate height once after initial render and skills are loaded
-    if (!initialRenderComplete.current && skills.length > 0) {
-      // Set a small timeout to ensure the DOM has fully rendered
-      const timer = setTimeout(() => {
-        const sectionElement = document.getElementById("skills");
-        if (sectionElement) {
-          // Add a small buffer to prevent potential scrollbars
-          const height = sectionElement.offsetHeight + 20;
-          setSectionHeight(`${height}px`);
-          initialRenderComplete.current = true;
-        }
-      }, 100);
-
-      return () => clearTimeout(timer);
-    }
-  }, [skills]);
 
   const handleCategoryChange = useCallback((category: string) => {
     setActiveCategory(category);
@@ -118,16 +96,10 @@ export default function SkillsSection() {
     skillGroups.push(filteredSkills.slice(i, i + skillsPerPage));
   }
 
-  // Ensure we have at least one group with empty placeholders if needed
-  if (skillGroups.length === 0) {
-    skillGroups.push(Array(skillsPerPage).fill(null));
-  }
-
   return (
     <section
       id="skills"
-      className="py-12 min-h-screen flex items-center bg-gradient-to-b from-background via-secondary/50 to-background"
-      style={{ height: sectionHeight !== "auto" ? sectionHeight : "auto" }}
+      className=" pt-20 flex flex-col justify-start items-center bg-gradient-to-b from-background via-secondary/50 to-background"
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 animate-fade-in">
@@ -167,24 +139,26 @@ export default function SkillsSection() {
           ))}
         </div>
 
-        {/* Skills Carousel using shadcn Carousel */}
-        <div className="relative max-w-6xl mx-auto">
+        {/* Skills Carousel */}
+        <div className="relative w-full max-w-6xl mx-auto flex-grow min-h-screen">
+          {" "}
+          {/* Add min-h-screen here */}
           <Carousel className="w-full">
             <CarouselContent>
               {skillGroups.map((group, groupIndex) => (
                 <CarouselItem key={groupIndex}>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 grid-rows-2">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {group.map((skill, idx) => (
                       <div
                         key={skill ? skill.id : `empty-${idx}`}
-                        className="bg-card p-6 rounded-lg shadow-sm border border-border/50 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
+                        className="bg-card p-6 min-h-[200px] flex flex-col justify-between rounded-lg shadow-sm border border-border/50 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
                       >
                         {skill ? (
                           <>
-                            <h3 className="text-xl font-bold mb-2">
+                            <h3 className="text-xl sm:text-lg md:text-xl font-bold mb-2">
                               {skill.name}
                             </h3>
-                            <p className="text-sm text-muted-foreground mb-3">
+                            <p className="text-sm sm:text-xs text-muted-foreground mb-3">
                               {skill.category}
                             </p>
                             <div className="w-full bg-secondary rounded-full h-2.5 mb-1">
@@ -199,7 +173,6 @@ export default function SkillsSection() {
                             </div>
                           </>
                         ) : (
-                          // Empty placeholder to maintain consistent height
                           <div className="h-[140px] flex items-center justify-center">
                             <p className="text-muted-foreground/50 italic">
                               No skill
@@ -214,10 +187,10 @@ export default function SkillsSection() {
             </CarouselContent>
 
             {skillGroups.length > 1 && (
-              <>
-                <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 md:-translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group" />
-                <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 md:translate-x-16 z-10 p-2 md:p-3 rounded-full bg-background/80 backdrop-blur-sm border border-border/50 shadow-lg hover:bg-primary/10 hover:border-primary/50 transition-all duration-300 group" />
-              </>
+              <div className="pt-8 flex items-center justify-center gap-4 relative z-10">
+                <CarouselPrevious className="static" />
+                <CarouselNext className="static" />
+              </div>
             )}
           </Carousel>
         </div>
