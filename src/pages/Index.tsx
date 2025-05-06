@@ -1,4 +1,3 @@
-
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import ProjectsSection from "@/components/ProjectsSection";
@@ -12,14 +11,12 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      <main className="scroll-smooth">
-        <HeroSection />
-        <AboutSection />
-        <SkillsSection />
-        <ProjectsSection />
-        <TestimonialsSection />
-        <ContactSection />
-      </main>
+      <HeroSection />
+      <AboutSection />
+      <SkillsSection />
+      <ProjectsSection />
+      <TestimonialsSection />
+      <ContactSection />
       <Footer />
     </div>
   );
