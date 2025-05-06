@@ -5,7 +5,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center py-12 relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center  relative overflow-hidden"
     >
       {/* Background blobs */}
       <div className="absolute -top-32 -left-32 w-96 h-96 blob opacity-20 animate-blob"></div>
@@ -15,7 +15,7 @@ export default function HeroSection() {
         <div className="flex flex-col lg:flex-row gap-12 items-center justify-center text-center lg:text-left">
           <div className="flex-1 max-w-2xl mx-auto lg:mx-0">
             <div className="space-y-6 animate-fade-in">
-              <div className="flex items-center justify-center lg:justify-start gap-4">
+              <div className="flex items-center justify-center lg:justify-start gap-4  pt-28 md:pt-0 ">
                 <div className="w-3 h-3 rounded-full bg-primary animate-bounce-light"></div>
                 <p className="text-lg font-medium text-foreground/80">
                   Hi there, I'm
