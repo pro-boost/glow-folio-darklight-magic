@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useCallback } from "react";
 
 import { cn } from "@/lib/utils";
@@ -32,7 +31,7 @@ const defaultSkills = [
   { id: "12", name: "Git/GitHub", category: "Tools", level: 90 },
   {
     id: "14",
-    name: "Testing (Jest/React Testing Library)",
+    name: "React Testing Library",
     category: "Frontend",
     level: 85,
   },
@@ -100,19 +99,19 @@ export default function SkillsSection() {
   return (
     <section
       id="skills"
-      className="h-screen flex flex-col bg-gradient-to-b from-background via-secondary/50 to-background"
+      className="h-screen flex pt-24 pb-12 items-center justify-center bg-gradient-to-b from-background via-secondary/50 to-background"
     >
-      <div className="container mx-auto px-4 py-16 flex flex-col h-full">
-        <div className="text-center mb-8 animate-fade-in">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-4 sm:mb-12 animate-fade-in">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">My Skills</h2>
-          <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-4"></div>
+          <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-8"></div>
           <p className="text-lg text-foreground/80 max-w-3xl mx-auto">
             Here are the technologies and tools I specialize in.
           </p>
         </div>
 
         {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-6">
+        <div className="flex flex-wrap justify-center gap-2 mb-4 sm:mb-12">
           <button
             onClick={() => handleCategoryChange("all")}
             className={cn(
@@ -141,12 +140,12 @@ export default function SkillsSection() {
         </div>
 
         {/* Skills Carousel */}
-        <div className="relative w-full max-w-6xl mx-auto flex-grow flex flex-col">
+        <div className="relative w-full max-w-6xl mx-auto h-[420px] flex-grow flex flex-col">
           <Carousel className="w-full flex-grow">
-            <CarouselContent className="h-full">
+            <CarouselContent className="mb-4 sm:mb-12 h-full">
               {skillGroups.map((group, groupIndex) => (
                 <CarouselItem key={groupIndex} className="h-full">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full content-start">
+                  <div className="grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-6 h-full content-start">
                     {group.map((skill, idx) => (
                       <div
                         key={skill ? skill.id : `empty-${idx}`}
