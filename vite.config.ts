@@ -4,10 +4,10 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
-  base: '/',
-  server: {
-    host: "::",
-    port: 8080,
+  base: '/glow-folio-darklight-magic/',
+  build: {
+    outDir: 'dist',
+    index: 'src/index.html', // Update this to point to the correct location of your index.html file
   },
   plugins: [
     react(),
