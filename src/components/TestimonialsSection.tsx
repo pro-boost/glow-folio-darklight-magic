@@ -56,8 +56,8 @@ export default function TestimonialsSection() {
       key={testimonial.id}
       className={cn(
         "bg-card border border-border/50 rounded-xl p-6 md:p-8 relative",
-        "hover:shadow-lg transition-all duration-300",
-        "animate-scale-in",
+        "hover:shadow-lg hover:border-primary/50 transition-all duration-300",
+        "animate-scale-in hover:-translate-y-1",
         !isMobile &&
           (index === 1 ? "delay-200" : index === 2 ? "delay-400" : "")
       )}
