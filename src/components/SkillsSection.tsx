@@ -1,4 +1,5 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+
+import { useEffect, useState, useCallback } from "react";
 
 import { cn } from "@/lib/utils";
 import {
@@ -99,19 +100,19 @@ export default function SkillsSection() {
   return (
     <section
       id="skills"
-      className=" pt-20 flex flex-col justify-start items-center bg-gradient-to-b from-background via-secondary/50 to-background"
+      className="h-screen flex flex-col bg-gradient-to-b from-background via-secondary/50 to-background"
     >
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16 animate-fade-in">
+      <div className="container mx-auto px-4 py-16 flex flex-col h-full">
+        <div className="text-center mb-8 animate-fade-in">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">My Skills</h2>
-          <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-8"></div>
+          <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-4"></div>
           <p className="text-lg text-foreground/80 max-w-3xl mx-auto">
             Here are the technologies and tools I specialize in.
           </p>
         </div>
 
         {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
+        <div className="flex flex-wrap justify-center gap-2 mb-6">
           <button
             onClick={() => handleCategoryChange("all")}
             className={cn(
@@ -140,18 +141,16 @@ export default function SkillsSection() {
         </div>
 
         {/* Skills Carousel */}
-        <div className="relative w-full max-w-6xl mx-auto flex-grow min-h-screen">
-          {" "}
-          {/* Add min-h-screen here */}
-          <Carousel className="w-full">
-            <CarouselContent>
+        <div className="relative w-full max-w-6xl mx-auto flex-grow flex flex-col">
+          <Carousel className="w-full flex-grow">
+            <CarouselContent className="h-full">
               {skillGroups.map((group, groupIndex) => (
-                <CarouselItem key={groupIndex}>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <CarouselItem key={groupIndex} className="h-full">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full content-start">
                     {group.map((skill, idx) => (
                       <div
                         key={skill ? skill.id : `empty-${idx}`}
-                        className="bg-card p-6 min-h-[200px] flex flex-col justify-between rounded-lg shadow-sm border border-border/50 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
+                        className="bg-card p-6 flex flex-col justify-between rounded-lg shadow-sm border border-border/50 hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
                       >
                         {skill ? (
                           <>
@@ -173,7 +172,7 @@ export default function SkillsSection() {
                             </div>
                           </>
                         ) : (
-                          <div className="h-[140px] flex items-center justify-center">
+                          <div className="h-full flex items-center justify-center">
                             <p className="text-muted-foreground/50 italic">
                               No skill
                             </p>
@@ -187,7 +186,7 @@ export default function SkillsSection() {
             </CarouselContent>
 
             {skillGroups.length > 1 && (
-              <div className="pt-8 flex items-center justify-center gap-4 relative z-10">
+              <div className="pt-4 flex items-center justify-center gap-4 relative z-10">
                 <CarouselPrevious className="static" />
                 <CarouselNext className="static" />
               </div>
