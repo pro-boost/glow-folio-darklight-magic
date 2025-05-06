@@ -117,29 +117,28 @@ export default function Header() {
           <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
             {!isAdminPage &&
               navLinks.map((link) => (
-                <a
+                <Link
                   key={link.name}
-                  href={link.href}
+                  to={link.href}
                   className={cn(
                     "text-foreground/80 hover:text-primary transition-colors font-medium py-2",
-                    activeSection === link.href.substring(1) && "text-primary"
+                    (activeSection === link.href.substring(1) ||
+                      (link.href === "/" && activeSection === "home")) &&
+                      "text-primary"
                   )}
-                  onClick={() => {
-                    handleNavClick(link.href);
-                    closeMobileMenu();
-                  }}
+                  onClick={closeMobileMenu}
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
             {isAdminPage && (
-              <a
-                href="/"
+              <Link
+                to="/"
                 className="text-foreground/80 hover:text-primary transition-colors font-medium py-2"
                 onClick={closeMobileMenu}
               >
                 Back to Site
-              </a>
+              </Link>
             )}
           </nav>
         </div>
