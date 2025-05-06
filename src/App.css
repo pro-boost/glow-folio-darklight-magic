@@ -5,6 +5,17 @@
   text-align: center;
 }
 
+html {
+  scroll-behavior: smooth; /* Enables smooth scrolling */
+}
+
+section {
+  scroll-snap-align: start; /* Ensures sections snap into place */
+}
+
+body {
+  scroll-snap-type: y mandatory; /* Enables vertical scroll snapping */
+}
 .logo {
   height: 6em;
   padding: 1.5em;
