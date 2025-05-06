@@ -3,8 +3,10 @@ import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
 import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
-import { useLocation } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
+
 import { Link } from "react-router-dom";
+import useScrollSpy from "../hooks/use-scroll-spy"; // Import the hook
 
 const navLinks = [
   { name: "Home", href: "#home" },
@@ -19,33 +21,30 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const location = useLocation();
 
-  const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "Skills", href: "/skills" },
-    { name: "Projects", href: "/projects" },
-    { name: "Testimonials", href: "/testimonials" },
-    { name: "Contact", href: "/contact" },
-  ];
+  // Use the custom hook to detect which section is in view
+  const activeSectionFromScroll = useScrollSpy([
+    "home",
+    "about",
+    "skills",
+    "projects",
+    "testimonials",
+    "contact",
+  ]);
 
-  const isAdminPage = location.pathname === "/admin";
+  // Update active section based on scroll detection
+  useEffect(() => {
+    setActiveSection(activeSectionFromScroll);
+  }, [activeSectionFromScroll]);
 
   useEffect(() => {
-    // Handle scroll events for styling only (not for section detection)
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 10);
     };
-
-    // Extract the current section from the path
-    const currentPath =
-      location.pathname === "/" ? "home" : location.pathname.substring(1);
-    setActiveSection(currentPath);
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [location]);
+  }, []);
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
@@ -54,8 +53,8 @@ export default function Header() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
-          ? "bg-background/80 backdrop-blur-md shadow-sm"
-          : "bg-transparent"
+          ? "bg-background/80 backdrop-blur-md shadow-[0_0.1px_20px_rgba(99,102,241,0.2)]"
+          : "bg-transparent shadow-[0_0.1px_20px_rgba(99,102,241,0.2)]"
       )}
     >
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -65,30 +64,22 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          {!isAdminPage &&
-            navLinks.map((link) => (
-              <Link
-                key={link.name}
-                to={link.href}
-                className={cn(
-                  "text-foreground/80 hover:text-primary transition-colors font-medium",
-                  (activeSection === link.href.substring(1) ||
-                    (link.href === "/" && activeSection === "home")) &&
-                    "text-primary"
-                )}
-                onClick={closeMobileMenu}
-              >
-                {link.name}
-              </Link>
-            ))}
-          {isAdminPage && (
-            <Link
-              to="/"
-              className="text-foreground/80 hover:text-primary transition-colors font-medium"
+          {navLinks.map((link) => (
+            <HashLink
+              key={link.name}
+              smooth
+              to={link.href} // e.g. "#about"
+              className={cn(
+                "text-foreground/80 hover:text-primary transition-colors font-medium",
+                (activeSection === link.href.substring(1) ||
+                  (link.href === "#" && activeSection === "home")) &&
+                  "text-primary"
+              )}
             >
-              Back to Site
-            </Link>
-          )}
+              {link.name}
+            </HashLink>
+          ))}
+
           <ThemeToggle />
         </nav>
 
@@ -115,31 +106,20 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-md border-b shadow-lg animate-fade-in">
           <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
-            {!isAdminPage &&
-              navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  to={link.href}
-                  className={cn(
-                    "text-foreground/80 hover:text-primary transition-colors font-medium py-2",
-                    (activeSection === link.href.substring(1) ||
-                      (link.href === "/" && activeSection === "home")) &&
-                      "text-primary"
-                  )}
-                  onClick={closeMobileMenu}
-                >
-                  {link.name}
-                </Link>
-              ))}
-            {isAdminPage && (
-              <Link
-                to="/"
-                className="text-foreground/80 hover:text-primary transition-colors font-medium py-2"
-                onClick={closeMobileMenu}
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className={cn(
+                  "text-foreground/80 hover:text-primary transition-colors font-medium py-2",
+                  (activeSection === link.href.substring(1) ||
+                    (link.href === "#" && activeSection === "home")) &&
+                    "text-primary"
+                )}
               >
-                Back to Site
-              </Link>
-            )}
+                {link.name}
+              </a>
+            ))}
           </nav>
         </div>
       )}

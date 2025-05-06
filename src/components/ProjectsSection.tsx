@@ -161,7 +161,7 @@ export default function ProjectsSection() {
               <CarouselContent>
                 {projects.map((project) => (
                   <CarouselItem key={project.id}>
-                    <div className="relative bg-card border border-border/50 rounded-xl overflow-hidden shadow-sm transition-all hover:shadow-lg">
+                    <div className="relative bg-card border border-border/100 rounded-xl overflow-hidden  transition-all">
                       {project.isComingSoon && (
                         <div className="absolute top-4 right-4 z-20 bg-primary/90 text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
                           Coming Soon
