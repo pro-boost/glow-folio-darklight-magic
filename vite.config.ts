@@ -5,8 +5,8 @@ import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ command, mode }) => ({
   // Use conditional base path depending on environment
-  base: command === 'serve' ? '/' : '/glow-folio-darklight-magic/',
-  
+  base: '/',
+
   build: {
     outDir: 'dist',
   },
