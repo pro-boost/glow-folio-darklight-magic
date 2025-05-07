@@ -81,12 +81,12 @@ export default function PrivacyPolicy() {
                   contact us at:
                 </p>
                 <a
-                  href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=mohamed.boudrika.95@gmail.com"
+                  href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=contact@mohamed-b.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-medium text-foreground hover:text-primary transition-colors"
                 >
-                  Mohamed.boudrika.95@gmail.com
+                  contact@mohamed-b.com
                 </a>
               </section>
             </div>

@@ -77,7 +77,7 @@ export default function Footer() {
               <FaWhatsapp className="h-5 w-5" />
             </a>
             <a
-              href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=mohamed.boudrika.95@gmail.com"
+              href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=contact@mohamed-b.com"
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-primary/10 transition-colors"
