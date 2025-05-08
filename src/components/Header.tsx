@@ -4,8 +4,6 @@ import { ThemeToggle } from "./ThemeToggle";
 import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { HashLink } from "react-router-hash-link";
-
-import { Link } from "react-router-dom";
 import useScrollSpy from "../hooks/use-scroll-spy"; // Import the hook
 
 const navLinks = [
@@ -58,9 +56,9 @@ export default function Header() {
       )}
     >
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link to="/" className="text-2xl font-bold font-mono">
+        <HashLink smooth to="#home" className="text-2xl font-bold font-mono">
           Mohamed<span className="text-primary">B.</span>
-        </Link>
+        </HashLink>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
