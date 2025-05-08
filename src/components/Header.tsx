@@ -105,9 +105,11 @@ export default function Header() {
         <div className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-md border-b shadow-lg animate-fade-in">
           <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
             {navLinks.map((link) => (
-              <a
+              <HashLink
                 key={link.name}
-                href={link.href}
+                smooth
+                to={link.href}
+                onClick={closeMobileMenu}
                 className={cn(
                   "text-foreground/80 hover:text-primary transition-colors font-medium py-2",
                   (activeSection === link.href.substring(1) ||
@@ -116,7 +118,7 @@ export default function Header() {
                 )}
               >
                 {link.name}
-              </a>
+              </HashLink>
             ))}
           </nav>
         </div>
