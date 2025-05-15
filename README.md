@@ -104,13 +104,13 @@ After building the project, the static files will be located in the `dist/` dire
 
 ## 📁 Key Directories Explained
 
-| Directory       | Purpose                                         |
-|-----------------|-------------------------------------------------|
-| `public/`       | Contains static assets like images and icons    |
+| Directory         | Purpose                                       |
+| ----------------- | --------------------------------------------- |
+| `public/`         | Contains static assets like images and icons  |
 | `src/components/` | Reusable React components                     |
-| `src/pages/`    | Page-level components                           |
-| `src/styles/`   | Tailwind CSS configurations and custom styles   |
-| `src/utils/`    | Utility functions and helpers                   |
+| `src/pages/`      | Page-level components                         |
+| `src/styles/`     | Tailwind CSS configurations and custom styles |
+| `src/utils/`      | Utility functions and helpers                 |
 
 ## 📄 License
 
