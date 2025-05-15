@@ -57,7 +57,7 @@ export default function HeroSection() {
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/20 to-secondary/20 blur-2xl transform rotate-12"></div>
               <div className="relative bg-card rounded-2xl overflow-hidden shadow-xl p-1 animated-border">
                 <img
-                  src="images\HeroImg.jpg"
+                  src="images\HeroImg.webp"
                   alt="Dev"
                   className="w-full h-auto rounded-xl aspect-square object-cover"
                 />

@@ -28,7 +28,7 @@ const defaultProjects = [
     title: "Memory Card Game (Pokémon)",
     description:
       "A memory card game where players match Pokémon cards. Includes multiple levels and game-over conditions. Built with React and responsive design for all screen sizes.",
-    image: "images/PokemonGame.png", // Add your image URL here
+    image: "images/PokemonGame.webp", // Add your image URL here
     tags: [
       "React",
       "JavaScript",
@@ -45,7 +45,7 @@ const defaultProjects = [
     title: "Shopping Cart WebApp",
     description:
       "An e-commerce web application built with React. Users can browse products, add them to a cart, and proceed to checkout. Includes API integration and responsive design.",
-    image: "images/ShopingCart.jpeg", // Add your image URL here
+    image: "images/ShopingCart.webp", // Add your image URL here
     tags: [
       "React",
       "React Router",
@@ -61,7 +61,7 @@ const defaultProjects = [
     title: "Responsive Resume Website",
     description:
       "A personalized resume website designed to present a professional profile, education, work experience, and skills. Built with HTML, CSS, and JavaScript, featuring light and dark themes.",
-    image: "images/CV.jpg", // Add your image URL here
+    image: "images/CV.webp", // Add your image URL here
     tags: [
       "HTML",
       "CSS",
@@ -78,7 +78,7 @@ const defaultProjects = [
     title: "Military Equipment Shop",
     description:
       "An e-commerce web application built with React. Users can browse products, add them to a cart, and proceed to checkout. Includes API integration and responsive design.",
-    image: "images/StrikeGear.png",
+    image: "images/StrikeGear.webp",
     tags: [
       "React",
       "TypeScript",
