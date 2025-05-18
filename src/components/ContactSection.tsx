@@ -227,7 +227,7 @@ export default function ContactSection() {
                   <Input
                     id="name"
                     name="name"
-                    placeholder="John Doe"
+                    placeholder="Full Name"
                     value={formData.name}
                     onChange={handleChange}
                     required
@@ -235,14 +235,14 @@ export default function ContactSection() {
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-medium">
+                  <label htmlFor="email adress" className="text-sm font-medium">
                     Your Email
                   </label>
                   <Input
                     id="email"
                     name="email"
                     type="email"
-                    placeholder="john@example.com"
+                    placeholder="email@example.com"
                     value={formData.email}
                     onChange={handleChange}
                     required
