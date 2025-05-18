@@ -37,30 +37,30 @@ export default function ContactSection() {
     // Send email to yourself with client data
     emailjs
       .send(
-        "service_lnbaknq", // Your service ID
-        "template_6i42w2g", // Your template ID for the email you receive
+        "service_wbqfhe8", // Your service ID
+        "template_lvv12pr", // Your template ID for the email you receive
         {
           name: formData.name,
           email: formData.email,
           message: formData.message,
           date: new Date().toLocaleString(),
         },
-        "u1gmD7IX6M4BMRgHD" // Your user ID
+        "3kXlOdYyYglnHjvf2" // Your user ID
       )
       .then(
         (result) => {
           // Then send auto-reply to the client using the new template
           emailjs
             .send(
-              "service_lnbaknq", // Your service ID
-              "template_xc9yjas", // Your auto-reply template ID
+              "service_wbqfhe8", // Your service ID
+              "template_ks76nww", // Your auto-reply template ID
               {
                 name: formData.name,
                 email: formData.email,
                 message: formData.message,
                 date: new Date().toLocaleString(),
               },
-              "u1gmD7IX6M4BMRgHD" // Your user ID
+              "3kXlOdYyYglnHjvf2" // Your user ID
             )
             .then(() => {
               toast({
