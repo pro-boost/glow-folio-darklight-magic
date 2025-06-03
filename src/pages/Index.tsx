@@ -8,20 +8,34 @@ import Header from "@/components/Header";
 import SkillsSection from "@/components/SkillsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 
-interface IndexProps {
-  section?: string;
-}
-
-const Index = ({ section = "home" }: IndexProps) => {
+const Index = () => {
   useEffect(() => {
-    // Scroll to the appropriate section when component mounts or section changes
-    const element = document.getElementById(section);
-    if (element) {
-      setTimeout(() => {
-        element.scrollIntoView({ behavior: "smooth" });
-      }, 100); // Small delay to ensure components are rendered
-    }
-  }, [section]);
+    // Handle initial scroll to section based on URL hash
+    const handleHashScroll = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        const sectionId = hash.substring(1); // Remove the # from the hash
+        const element = document.getElementById(sectionId);
+        if (element) {
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: "smooth" });
+          }, 100);
+        }
+      }
+    };
+
+    // Handle hash changes
+    const handleHashChange = () => {
+      handleHashScroll();
+    };
+
+    // Initial scroll
+    handleHashScroll();
+
+    // Listen for hash changes
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
 
   return (
     <>

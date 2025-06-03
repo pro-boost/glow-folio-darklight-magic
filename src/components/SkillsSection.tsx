@@ -17,53 +17,30 @@ interface Skill {
 }
 
 const defaultSkills = [
-  { id: "1", name: "React", category: "Frontend", level: 95 },
-  { id: "7", name: "JavaScript (ES6+)", category: "Frontend", level: 95 },
+  { id: "1", name: "React", category: "Frontend", level: 85 },
+  { id: "2", name: "NextJS", category: "Frontend", level: 85 },
+  { id: "3", name: "JavaScript (ES6+)", category: "Frontend", level: 75 },
   { id: "4", name: "HTML5", category: "Frontend", level: 95 },
-  { id: "5", name: "CSS3/SASS", category: "Frontend", level: 95 },
+  { id: "5", name: "CSS3/SASS", category: "Frontend", level: 85 },
   { id: "6", name: "TailwindCSS", category: "Frontend", level: 95 },
-  { id: "9", name: "Responsive Design", category: "Design", level: 95 },
-  { id: "2", name: "TypeScript", category: "Frontend", level: 90 },
-  { id: "8", name: "Redux/State Management", category: "Frontend", level: 90 },
-  { id: "15", name: "RESTful APIs", category: "Frontend", level: 90 },
-  { id: "10", name: "UI/UX Design", category: "Design", level: 90 },
-  { id: "11", name: "Web Accessibility", category: "Design", level: 90 },
-  { id: "12", name: "Git/GitHub", category: "Tools", level: 90 },
-  {
-    id: "14",
-    name: "React Testing Library",
-    category: "Frontend",
-    level: 85,
-  },
-  { id: "13", name: "Web Performance", category: "Frontend", level: 85 },
+  { id: "7", name: "Responsive Design", category: "Design", level: 95 },
+  { id: "8", name: "TypeScript", category: "Frontend", level: 70 },
+  { id: "9", name: "Redux/State Management", category: "Frontend", level: 70 },
+  { id: "10", name: "RESTful APIs", category: "Frontend", level: 90 },
+  { id: "11", name: "UI/UX Design", category: "Design", level: 80 },
+  { id: "12", name: "Web Accessibility", category: "Design", level: 90 },
+  { id: "13", name: "Git/GitHub", category: "Tools", level: 70 },
+  { id: "14", name: "React Testing Library", category: "Frontend", level: 75 },
+  { id: "15", name: "Web Performance", category: "Frontend", level: 85 },
 ];
 
 export default function SkillsSection() {
-  const [skills, setSkills] = useState<Skill[]>(defaultSkills);
+  const [skills] = useState<Skill[]>(defaultSkills);
   const [activeCategory, setActiveCategory] = useState<string>("all");
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories] = useState<string[]>(() =>
+    Array.from(new Set(defaultSkills.map((skill) => skill.category)))
+  );
   const [skillsPerPage, setSkillsPerPage] = useState(6);
-
-  useEffect(() => {
-    const savedSkills = localStorage.getItem("portfolio-skills");
-    if (savedSkills) {
-      try {
-        const loadedSkills = JSON.parse(savedSkills) as Skill[];
-        setSkills(loadedSkills);
-        const uniqueCategories = Array.from(
-          new Set(loadedSkills.map((skill: Skill) => skill.category))
-        );
-        setCategories(uniqueCategories);
-      } catch (error) {
-        console.error("Error loading skills from localStorage:", error);
-      }
-    } else {
-      const uniqueCategories = Array.from(
-        new Set(defaultSkills.map((skill) => skill.category))
-      );
-      setCategories(uniqueCategories);
-    }
-  }, []);
 
   useEffect(() => {
     const updateSkillsPerPage = () => {

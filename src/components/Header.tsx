@@ -3,16 +3,15 @@ import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./ThemeToggle";
 import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
-import { HashLink } from "react-router-hash-link";
 import useScrollSpy from "../hooks/use-scroll-spy"; // Import the hook
 
 const navLinks = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
-  { name: "Testimonials", href: "#testimonials" },
-  { name: "Contact", href: "#contact" },
+  { name: "Home", href: "/#home" },
+  { name: "About", href: "/#about" },
+  { name: "Skills", href: "/#skills" },
+  { name: "Projects", href: "/#projects" },
+  { name: "Testimonials", href: "/#testimonials" },
+  { name: "Contact", href: "/#contact" },
 ];
 
 export default function Header() {
@@ -46,6 +45,21 @@ export default function Header() {
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
+  const scrollToSection = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string
+  ) => {
+    // Don't prevent default - let the hash update the URL
+    const sectionId = href.split("#")[1];
+    const element = document.getElementById(sectionId);
+    if (element) {
+      // Use setTimeout to ensure the hash is updated in the URL first
+      setTimeout(() => {
+        element.scrollIntoView({ behavior: "smooth" });
+      }, 0);
+    }
+  };
+
   return (
     <header
       className={cn(
@@ -56,26 +70,30 @@ export default function Header() {
       )}
     >
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <HashLink smooth to="#home" className="text-2xl font-bold font-mono">
+        <a
+          href="/#home"
+          className="text-2xl font-bold font-mono"
+          onClick={(e) => scrollToSection(e, "/#home")}
+        >
           Mohamed<span className="text-primary">B.</span>
-        </HashLink>
+        </a>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => (
-            <HashLink
+            <a
               key={link.name}
-              smooth
-              to={link.href} // e.g. "#about"
+              href={link.href}
+              onClick={(e) => scrollToSection(e, link.href)}
               className={cn(
                 "text-foreground/80 hover:text-primary transition-colors font-medium",
-                (activeSection === link.href.substring(1) ||
-                  (link.href === "#" && activeSection === "home")) &&
+                (activeSection === link.href.split("#")[1] ||
+                  (link.href === "/#home" && activeSection === "home")) &&
                   "text-primary"
               )}
             >
               {link.name}
-            </HashLink>
+            </a>
           ))}
 
           <ThemeToggle />
@@ -105,20 +123,22 @@ export default function Header() {
         <div className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-md border-b shadow-lg animate-fade-in">
           <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
             {navLinks.map((link) => (
-              <HashLink
+              <a
                 key={link.name}
-                smooth
-                to={link.href}
-                onClick={closeMobileMenu}
+                href={link.href}
+                onClick={(e) => {
+                  scrollToSection(e, link.href);
+                  closeMobileMenu();
+                }}
                 className={cn(
                   "text-foreground/80 hover:text-primary transition-colors font-medium py-2",
-                  (activeSection === link.href.substring(1) ||
-                    (link.href === "#" && activeSection === "home")) &&
+                  (activeSection === link.href.split("#")[1] ||
+                    (link.href === "/#home" && activeSection === "home")) &&
                     "text-primary"
                 )}
               >
                 {link.name}
-              </HashLink>
+              </a>
             ))}
           </nav>
         </div>
