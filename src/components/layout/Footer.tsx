@@ -1,6 +1,5 @@
 import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
 import { Mail } from "lucide-react";
-import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 export default function Footer() {
@@ -18,7 +17,7 @@ export default function Footer() {
             <p className="text-foreground/60 mt-2">{t("footer.tagline")}</p>
           </div>
 
-          <div className="flex gap-6">
+          <div className="flex pb-12 gap-6">
             <a
               href="https://github.com/pro-boost/"
               target="_blank"
