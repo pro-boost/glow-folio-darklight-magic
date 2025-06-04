@@ -107,23 +107,26 @@ export default function ProjectsSection() {
     }
   }, []);
 
-  const getProjectIndex = (index: number) => {
-    return (index + projects.length) % projects.length;
-  };
+  const getProjectIndex = useCallback(
+    (index: number) => {
+      return (index + projects.length) % projects.length;
+    },
+    [projects.length]
+  );
 
   const nextProject = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
     setCurrentIndex((prev) => getProjectIndex(prev + 1));
     setTimeout(() => setIsAnimating(false), 600);
-  }, [isAnimating]);
+  }, [isAnimating, getProjectIndex]);
 
   const prevProject = useCallback(() => {
     if (isAnimating) return;
     setIsAnimating(true);
     setCurrentIndex((prev) => getProjectIndex(prev - 1));
     setTimeout(() => setIsAnimating(false), 600);
-  }, [isAnimating]);
+  }, [isAnimating, getProjectIndex]);
 
   // Auto-rotate every 5 seconds
   useEffect(() => {
@@ -354,8 +357,10 @@ export default function ProjectsSection() {
 
             {/* Project Counter */}
             <div className="text-center mt-4 md:mt-6 text-xs md:text-sm text-foreground/60">
-              {t("projects.projectCounter")} {currentIndex + 1} of{" "}
-              {projects.length}
+              {t("projects.projectCounter", {
+                current: currentIndex + 1,
+                total: projects.length,
+              })}
             </div>
           </div>
         )}

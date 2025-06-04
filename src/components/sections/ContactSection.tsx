@@ -144,7 +144,7 @@ export default function ContactSection() {
                         rel="noopener noreferrer"
                         className="font-medium text-foreground hover:text-primary transition-colors"
                       >
-                        +212661880323
+                        +212.6.61.88.03.23
                       </a>
                     </div>
                   </div>
@@ -231,7 +231,7 @@ export default function ContactSection() {
               <div className="grid sm:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label htmlFor="name" className="text-sm font-medium">
-                    {t("contact.form.name.label")}
+                    {t("contact.form.name")}
                   </label>
                   <Input
                     id="name"
@@ -245,7 +245,7 @@ export default function ContactSection() {
 
                 <div className="space-y-2">
                   <label htmlFor="email" className="text-sm font-medium">
-                    {t("contact.form.email.label")}
+                    {t("contact.form.email")}
                   </label>
                   <Input
                     id="email"
@@ -261,7 +261,7 @@ export default function ContactSection() {
 
               <div className="space-y-2">
                 <label htmlFor="message" className="text-sm font-medium">
-                  {t("contact.form.message.label")}
+                  {t("contact.form.message")}
                 </label>
                 <Textarea
                   id="message"

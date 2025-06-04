@@ -129,11 +129,11 @@ export const fr: TranslationType = {
     title: "Me contacter",
     description:
       "Vous avez un projet en tête ou souhaitez simplement échanger ? N'hésitez pas à m'écrire via le formulaire ci-dessous.",
-    contactInfo: {
+    info: {
       title: "Coordonnées",
-      email: "Email",
-      phone: "Téléphone",
-      social: "Réseaux sociaux",
+      email: { label: "Email" },
+      phone: { label: "Téléphone" },
+      social: { label: "Réseaux sociaux" },
     },
     availability: {
       title: "Disponibilité actuelle",

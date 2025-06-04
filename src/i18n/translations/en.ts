@@ -130,11 +130,11 @@ export const en: TranslationType = {
     title: "Get in Touch",
     description:
       "Have a project in mind or just want to connect? Feel free to reach out using the form below.",
-    contactInfo: {
+    info: {
       title: "Contact Info",
-      email: "Email",
-      phone: "Phone",
-      social: "Social",
+      email: { label: "Email" },
+      phone: { label: "Phone" },
+      social: { label: "Social" },
     },
     availability: {
       title: "Current Availability",
@@ -142,9 +142,9 @@ export const en: TranslationType = {
         "I'm currently available for freelance work and open to new opportunities. I typically respond within 24 hours.",
     },
     form: {
-      name: "Your Name",
-      namePlaceholder: "Full Name",
-      email: "Your Email",
+      name: "Name",
+      namePlaceholder: "Full name",
+      email: "Email",
       emailPlaceholder: "email@example.com",
       message: "Message",
       messagePlaceholder: "Tell me about your project...",

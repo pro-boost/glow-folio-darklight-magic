@@ -8,6 +8,7 @@ export const en: TranslationType = {
     projects: "Projects",
     testimonials: "Testimonials",
     contact: "Contact",
+    menuToggle: "Menu",
   },
 
   hero: {
@@ -55,7 +56,7 @@ export const en: TranslationType = {
     description: "Here are some of my recent projects. Each one represents different challenges and solutions using various technologies.",
     comingSoon: "Coming Soon",
     viewMore: "View More on GitHub",
-    projectCounter: "Project {current} of {total}",
+    projectCounter: "Project {{current}} of {{total}}",
     tags: {
       live: "Live Demo",
       code: "Code",
@@ -108,11 +109,17 @@ export const en: TranslationType = {
   contact: {
     title: "Get In Touch",
     description: "Have a project in mind or just want to say hello? I'd love to hear from you. Feel free to reach out using the form below.",
-    contactInfo: {
+    info: {
       title: "Contact Info",
-      email: "Email",
-      phone: "Phone",
-      social: "Social",
+      email: {
+        label: "Email"
+      },
+      phone: {
+        label: "Phone"
+      },
+      social: {
+        label: "Social"
+      }
     },
     availability: {
       title: "Current Availability",
@@ -120,7 +127,7 @@ export const en: TranslationType = {
     },
     form: {
       name: "Your Name",
-      namePlaceholder: "Full Name",
+      namePlaceholder: "Full name",
       email: "Your Email",
       emailPlaceholder: "email@example.com",
       message: "Message",

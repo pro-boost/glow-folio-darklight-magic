@@ -103,11 +103,11 @@ export type TranslationType = {
   contact: {
     title: string;
     description: string;
-    contactInfo: {
+    info: {
       title: string;
-      email: string;
-      phone: string;
-      social: string;
+      email: { label: string };
+      phone: { label: string };
+      social: { label: string };
     };
     availability: {
       title: string;

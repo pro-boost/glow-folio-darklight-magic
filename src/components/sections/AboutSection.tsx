@@ -39,7 +39,7 @@ export default function AboutSection() {
 
         <div className="max-w-4xl mx-auto mb-12">
           <div className="animate-fade-in">
-            <p className="text-lg text-foreground/80 leading-relaxed">
+            <p className="text-lg text-foreground/80 text-justify md:text-center leading-relaxed">
               {t("about.description")}
             </p>
           </div>

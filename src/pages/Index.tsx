@@ -1,12 +1,27 @@
-import { useEffect } from "react";
-import HeroSection from "@/components/sections/HeroSection";
-import AboutSection from "@/components/sections/AboutSection";
-import ProjectsSection from "@/components/sections/ProjectsSection";
-import ContactSection from "@/components/sections/ContactSection";
-import Footer from "@/components/layout/Footer";
+import { useEffect, Suspense, lazy } from "react";
 import Header from "@/components/layout/Header";
-import SkillsSection from "@/components/sections/SkillsSection";
-import TestimonialsSection from "@/components/sections/TestimonialsSection";
+import Footer from "@/components/layout/Footer";
+
+// Lazy load sections
+const HeroSection = lazy(() => import("@/components/sections/HeroSection"));
+const AboutSection = lazy(() => import("@/components/sections/AboutSection"));
+const ProjectsSection = lazy(
+  () => import("@/components/sections/ProjectsSection")
+);
+const ContactSection = lazy(
+  () => import("@/components/sections/ContactSection")
+);
+const SkillsSection = lazy(() => import("@/components/sections/SkillsSection"));
+const TestimonialsSection = lazy(
+  () => import("@/components/sections/TestimonialsSection")
+);
+
+// Loading component for sections
+const SectionLoading = () => (
+  <div className="min-h-[50vh] flex items-center justify-center">
+    <div className="animate-pulse w-full h-full bg-muted/20 rounded-lg"></div>
+  </div>
+);
 
 const Index = () => {
   useEffect(() => {
@@ -14,7 +29,7 @@ const Index = () => {
     const handleHashScroll = () => {
       const hash = window.location.hash;
       if (hash) {
-        const sectionId = hash.substring(1); // Remove the # from the hash
+        const sectionId = hash.substring(1);
         const element = document.getElementById(sectionId);
         if (element) {
           setTimeout(() => {
@@ -24,15 +39,11 @@ const Index = () => {
       }
     };
 
-    // Handle hash changes
     const handleHashChange = () => {
       handleHashScroll();
     };
 
-    // Initial scroll
     handleHashScroll();
-
-    // Listen for hash changes
     window.addEventListener("hashchange", handleHashChange);
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
@@ -43,27 +54,39 @@ const Index = () => {
 
       <main>
         <section id="home">
-          <HeroSection />
+          <Suspense fallback={<SectionLoading />}>
+            <HeroSection />
+          </Suspense>
         </section>
 
         <section id="about">
-          <AboutSection />
+          <Suspense fallback={<SectionLoading />}>
+            <AboutSection />
+          </Suspense>
         </section>
 
         <section id="skills">
-          <SkillsSection />
+          <Suspense fallback={<SectionLoading />}>
+            <SkillsSection />
+          </Suspense>
         </section>
 
         <section id="projects">
-          <ProjectsSection />
+          <Suspense fallback={<SectionLoading />}>
+            <ProjectsSection />
+          </Suspense>
         </section>
 
         <section id="testimonials">
-          <TestimonialsSection />
+          <Suspense fallback={<SectionLoading />}>
+            <TestimonialsSection />
+          </Suspense>
         </section>
 
         <section id="contact">
-          <ContactSection />
+          <Suspense fallback={<SectionLoading />}>
+            <ContactSection />
+          </Suspense>
         </section>
       </main>
 
