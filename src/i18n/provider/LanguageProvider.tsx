@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-
-type Language = "en" | "fr";
+import { Language } from "../translations/types";
 
 type LanguageProviderProps = {
   children: React.ReactNode;

@@ -4,7 +4,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import useScrollSpy from "../hooks/use-scroll-spy"; // Import the hook
-import { LanguageToggle } from "./LanguageToggle";
+import { LanguageToggle } from "@/i18n";
 
 const navLinks = [
   { name: "Home", href: "/#home" },

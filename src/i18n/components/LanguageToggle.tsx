@@ -1,6 +1,6 @@
 import { Languages } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useLanguage } from "./LanguageProvider";
+import { useLanguage } from "../provider/LanguageProvider";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
