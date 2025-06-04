@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Save } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-import Header from "@/components/Header";
+import Header from "@/components/layout/Header";
 
 const Admin = () => {
   const navigate = useNavigate();
