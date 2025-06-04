@@ -163,6 +163,7 @@ export default function ContactSection() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-foreground hover:text-primary transition-colors"
+                          aria-label="Follow me on X (Twitter)"
                           onClick={(e) => {
                             e.preventDefault();
                             window.open("https://x.com/Pro_boost_/", "_blank");
@@ -181,6 +182,7 @@ export default function ContactSection() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-foreground hover:text-primary transition-colors"
+                          aria-label="Visit my GitHub profile"
                           onClick={(e) => {
                             e.preventDefault();
                             window.open(
@@ -196,6 +198,7 @@ export default function ContactSection() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-foreground hover:text-primary transition-colors"
+                          aria-label="Connect with me on LinkedIn"
                           onClick={(e) => {
                             e.preventDefault();
                             window.open(

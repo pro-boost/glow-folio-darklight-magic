@@ -23,7 +23,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-primary/10 transition-colors"
-              aria-label="GitHub"
+              aria-label="Visit my GitHub profile"
               onClick={(e) => {
                 e.preventDefault();
                 window.open("https://github.com/pro-boost/", "_blank");
@@ -36,7 +36,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-primary/10 transition-colors"
-              aria-label="X (Twitter)"
+              aria-label="Follow me on X (Twitter)"
               onClick={(e) => {
                 e.preventDefault();
                 window.open("https://x.com/Pro_boost_/", "_blank");
@@ -55,7 +55,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-primary/10 transition-colors"
-              aria-label="LinkedIn"
+              aria-label="Connect with me on LinkedIn"
               onClick={(e) => {
                 e.preventDefault();
                 window.open(
@@ -71,7 +71,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-primary/10 transition-colors"
-              aria-label="WhatsApp"
+              aria-label="Contact me on WhatsApp"
             >
               <FaWhatsapp className="h-5 w-5" />
             </a>
@@ -80,7 +80,7 @@ export default function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-primary/10 transition-colors"
-              aria-label="Email"
+              aria-label="Send me an email"
             >
               <Mail className="h-5 w-5" />
             </a>
