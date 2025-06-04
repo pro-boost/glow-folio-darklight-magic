@@ -4,6 +4,7 @@ import { ThemeToggle } from "./ThemeToggle";
 import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import useScrollSpy from "../hooks/use-scroll-spy"; // Import the hook
+import { LanguageToggle } from "./LanguageToggle";
 
 const navLinks = [
   { name: "Home", href: "/#home" },
@@ -97,11 +98,13 @@ export default function Header() {
           ))}
 
           <ThemeToggle />
+          <LanguageToggle />
         </nav>
 
         {/* Mobile Menu Toggle */}
         <div className="flex md:hidden items-center gap-2">
           <ThemeToggle />
+          <LanguageToggle />
           <Button
             variant="ghost"
             size="icon"

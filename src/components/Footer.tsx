@@ -9,7 +9,7 @@ export default function Footer() {
     <footer className="border-t border-border/50 pt-12  bg-background">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-6 md:mb-0">
+          <div className="mb-6 pb-12 md:mb-0">
             <a href="#home" className="text-2xl font-bold font-mono">
               Mohamed<span className="text-primary">B.</span>
             </a>
