@@ -1,15 +1,16 @@
 import { useEffect, useState, useCallback } from "react";
 import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useTranslation } from "react-i18next";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "./ui/carousel";
+} from "../ui/carousel";
 
 interface Project {
   id: string;
@@ -24,11 +25,10 @@ interface Project {
 
 const defaultProjects = [
   {
-    id: "1",
-    title: "Memory Card Game (Pokémon)",
-    description:
-      "A memory card game where players match Pokémon cards. Includes multiple levels and game-over conditions. Built with React and responsive design for all screen sizes.",
-    image: "images/PokemonGame.webp", // Add your image URL here
+    id: "pokemon",
+    title: "pokemon",
+    description: "pokemon",
+    image: "images/PokemonGame.webp",
     tags: [
       "React",
       "JavaScript",
@@ -37,15 +37,14 @@ const defaultProjects = [
       "API Integration",
       "Responsive Design",
     ],
-    liveUrl: "https://pro-boost.github.io/Memory_card/", // Add live URL when available
-    githubUrl: "https://github.com/pro-boost/Memory_card", // Add GitHub URL when available
+    liveUrl: "https://pro-boost.github.io/Memory_card/",
+    githubUrl: "https://github.com/pro-boost/Memory_card",
   },
   {
-    id: "2",
-    title: "Shopping Cart WebApp",
-    description:
-      "An e-commerce web application built with React. Users can browse products, add them to a cart, and proceed to checkout. Includes API integration and responsive design.",
-    image: "images/ShopingCart.webp", // Add your image URL here
+    id: "shopping",
+    title: "shopping",
+    description: "shopping",
+    image: "images/ShopingCart.webp",
     tags: [
       "React",
       "React Router",
@@ -53,15 +52,14 @@ const defaultProjects = [
       "API Integration",
       "Responsive Design",
     ],
-    liveUrl: "https://pro-boost.github.io/Shoping-cart/", // Add live URL when available
-    githubUrl: "https://github.com/pro-boost/Shoping-cart", // Add GitHub URL when available
+    liveUrl: "https://pro-boost.github.io/Shoping-cart/",
+    githubUrl: "https://github.com/pro-boost/Shoping-cart",
   },
   {
-    id: "3",
-    title: "Responsive Resume Website",
-    description:
-      "A personalized resume website designed to present a professional profile, education, work experience, and skills. Built with HTML, CSS, and JavaScript, featuring light and dark themes.",
-    image: "images/CV.webp", // Add your image URL here
+    id: "resume",
+    title: "resume",
+    description: "resume",
+    image: "images/CV.webp",
     tags: [
       "HTML",
       "CSS",
@@ -69,15 +67,13 @@ const defaultProjects = [
       "Responsive Design",
       "Light/Dark Themes",
     ],
-    liveUrl: "https://pro-boost.github.io/CV/", // Add live URL when available
-    githubUrl: "https://github.com/pro-boost/CV", // Add GitHub URL when available
+    liveUrl: "https://pro-boost.github.io/CV/",
+    githubUrl: "https://github.com/pro-boost/CV",
   },
-
   {
-    id: "4",
-    title: "Military Equipment Shop",
-    description:
-      "An e-commerce web application built with React. Users can browse products, add them to a cart, and proceed to checkout. Includes API integration and responsive design.",
+    id: "military",
+    title: "military",
+    description: "military",
     image: "images/StrikeGear.webp",
     tags: [
       "React",
@@ -94,9 +90,11 @@ const defaultProjects = [
 ];
 
 export default function ProjectsSection() {
+  const { t } = useTranslation();
   const [projects, setProjects] = useState<Project[]>(defaultProjects);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const savedProjects = localStorage.getItem("portfolio-projects");
@@ -112,7 +110,6 @@ export default function ProjectsSection() {
   const getProjectIndex = (index: number) => {
     return (index + projects.length) % projects.length;
   };
-  const isMobile = useIsMobile();
 
   const nextProject = useCallback(() => {
     if (isAnimating) return;
@@ -147,11 +144,12 @@ export default function ProjectsSection() {
     <section id="projects" className="pt-24 pb-12 bg-secondary/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">My Projects</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            {t("projects.title")}
+          </h2>
           <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-8"></div>
           <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
-            Here are some of my recent projects. Each one represents different
-            challenges and solutions using various technologies.
+            {t("projects.description")}
           </p>
         </div>
         {isMobile ? (
@@ -161,10 +159,10 @@ export default function ProjectsSection() {
               <CarouselContent>
                 {projects.map((project) => (
                   <CarouselItem key={project.id}>
-                    <div className="relative bg-card border border-border/100 rounded-xl overflow-hidden  transition-all">
+                    <div className="relative bg-card border border-border/100 rounded-xl overflow-hidden transition-all">
                       {project.isComingSoon && (
                         <div className="absolute top-4 right-4 z-20 bg-primary/90 text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
-                          Coming Soon
+                          {t("projects.comingSoon")}
                         </div>
                       )}
                       <div
@@ -175,17 +173,17 @@ export default function ProjectsSection() {
                       >
                         <img
                           src={project.image}
-                          alt={project.title}
+                          alt={t(`projects.items.${project.id}.title`)}
                           className="w-full h-full object-cover transition-transform duration-500"
                         />
                       </div>
                       <div className="p-4">
                         <h3 className="text-lg font-bold mb-2 text-primary">
-                          {project.title}
+                          {t(`projects.items.${project.id}.title`)}
                         </h3>
                         <div className={cn(project.isComingSoon && "blur-sm")}>
                           <p className="text-sm text-foreground/70 mb-4">
-                            {project.description}
+                            {t(`projects.items.${project.id}.description`)}
                           </p>
                           <div className="flex flex-wrap gap-2 mb-4">
                             {project.tags.map((tag, idx) => (
@@ -209,7 +207,8 @@ export default function ProjectsSection() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
-                                <ExternalLink className="w-4 h-4 mr-1" /> Live
+                                <ExternalLink className="w-4 h-4 mr-1" />{" "}
+                                {t("projects.tags.live")}
                               </a>
                             </Button>
                             <Button
@@ -223,7 +222,8 @@ export default function ProjectsSection() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
-                                <Github className="w-4 h-4 mr-1" /> GitHub
+                                <Github className="w-4 h-4 mr-1" />{" "}
+                                {t("projects.tags.code")}
                               </a>
                             </Button>
                           </div>
@@ -274,7 +274,7 @@ export default function ProjectsSection() {
                     >
                       {project.isComingSoon && (
                         <div className="absolute top-4 right-4 z-20 bg-primary/90 text-primary-foreground px-3 py-1 rounded-full text-sm font-medium">
-                          Coming Soon
+                          {t("projects.comingSoon")}
                         </div>
                       )}
                       <div
@@ -285,18 +285,18 @@ export default function ProjectsSection() {
                       >
                         <img
                           src={project.image}
-                          alt={project.title}
+                          alt={t(`projects.items.${project.id}.title`)}
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       </div>
 
                       <div className="p-4 md:p-6">
                         <h3 className="text-lg md:text-xl font-bold mb-2 group-hover:text-primary transition-colors relative z-10">
-                          {project.title}
+                          {t(`projects.items.${project.id}.title`)}
                         </h3>
                         <div className={cn(project.isComingSoon && "blur-sm")}>
                           <p className="text-sm md:text-base text-foreground/70 mb-4">
-                            {project.description}
+                            {t(`projects.items.${project.id}.description`)}
                           </p>
 
                           <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
@@ -324,7 +324,7 @@ export default function ProjectsSection() {
                                 className="flex items-center gap-1.5 md:gap-2"
                               >
                                 <ExternalLink className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                                Live Demo
+                                {t("projects.tags.live")}
                               </a>
                             </Button>
                             <Button
@@ -340,7 +340,7 @@ export default function ProjectsSection() {
                                 className="flex items-center gap-1.5 md:gap-2"
                               >
                                 <Github className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                                Code
+                                {t("projects.tags.code")}
                               </a>
                             </Button>
                           </div>
@@ -354,7 +354,8 @@ export default function ProjectsSection() {
 
             {/* Project Counter */}
             <div className="text-center mt-4 md:mt-6 text-xs md:text-sm text-foreground/60">
-              Project {currentIndex + 1} of {projects.length}
+              {t("projects.projectCounter")} {currentIndex + 1} of{" "}
+              {projects.length}
             </div>
           </div>
         )}
@@ -365,7 +366,7 @@ export default function ProjectsSection() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              View More on GitHub
+              {t("projects.viewMore")}
             </a>
           </Button>
         </div>

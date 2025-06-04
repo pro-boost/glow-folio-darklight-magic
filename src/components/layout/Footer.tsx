@@ -1,9 +1,11 @@
 import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
 import { Mail } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function Footer() {
-  const year = new Date().getFullYear();
+  const { t } = useTranslation();
+  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="border-t border-border/50 pt-12  bg-background">
@@ -13,9 +15,7 @@ export default function Footer() {
             <a href="#home" className="text-2xl font-bold font-mono">
               Mohamed<span className="text-primary">B.</span>
             </a>
-            <p className="text-foreground/60 mt-2">
-              Creating digital experiences that inspire.
-            </p>
+            <p className="text-foreground/60 mt-2">{t("footer.tagline")}</p>
           </div>
 
           <div className="flex gap-6">
@@ -88,9 +88,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className=" border-t border-border/50 flex py-5 justify-center items-center">
+        <div className="border-t border-border/50 flex py-5 justify-center items-center">
           <p className="text-sm text-foreground/60">
-            &copy; {year} Mohamed B. — MIT Licensed
+            {t("footer.copyright", { year: currentYear })}
           </p>
         </div>
       </div>

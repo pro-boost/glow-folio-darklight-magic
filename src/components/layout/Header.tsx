@@ -5,17 +5,19 @@ import { Menu, X } from "lucide-react";
 import { Button } from "../ui/button";
 import useScrollSpy from "@/hooks/use-scroll-spy"; // Import the hook
 import { LanguageToggle } from "@/i18n";
+import { useTranslation } from "react-i18next";
 
-const navLinks = [
-  { name: "Home", href: "/#home" },
-  { name: "About", href: "/#about" },
-  { name: "Skills", href: "/#skills" },
-  { name: "Projects", href: "/#projects" },
-  { name: "Testimonials", href: "/#testimonials" },
-  { name: "Contact", href: "/#contact" },
+const navItems = [
+  { id: "home", href: "/#home" },
+  { id: "about", href: "/#about" },
+  { id: "skills", href: "/#skills" },
+  { id: "projects", href: "/#projects" },
+  { id: "testimonials", href: "/#testimonials" },
+  { id: "contact", href: "/#contact" },
 ];
 
 export default function Header() {
+  const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
@@ -81,19 +83,19 @@ export default function Header() {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
+          {navItems.map((item) => (
             <a
-              key={link.name}
-              href={link.href}
-              onClick={(e) => scrollToSection(e, link.href)}
+              key={item.id}
+              href={item.href}
+              onClick={(e) => scrollToSection(e, item.href)}
               className={cn(
                 "text-foreground/80 hover:text-primary transition-colors font-medium",
-                (activeSection === link.href.split("#")[1] ||
-                  (link.href === "/#home" && activeSection === "home")) &&
+                (activeSection === item.href.split("#")[1] ||
+                  (item.href === "/#home" && activeSection === "home")) &&
                   "text-primary"
               )}
             >
-              {link.name}
+              {t(`nav.${item.id}`)}
             </a>
           ))}
 
@@ -109,7 +111,7 @@ export default function Header() {
             variant="ghost"
             size="icon"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
+            aria-label={t("nav.menuToggle")}
             className="rounded-full"
           >
             {mobileMenuOpen ? (
@@ -125,22 +127,22 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-background/95 backdrop-blur-md border-b shadow-lg animate-fade-in">
           <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
-            {navLinks.map((link) => (
+            {navItems.map((item) => (
               <a
-                key={link.name}
-                href={link.href}
+                key={item.id}
+                href={item.href}
                 onClick={(e) => {
-                  scrollToSection(e, link.href);
+                  scrollToSection(e, item.href);
                   closeMobileMenu();
                 }}
                 className={cn(
                   "text-foreground/80 hover:text-primary transition-colors font-medium py-2",
-                  (activeSection === link.href.split("#")[1] ||
-                    (link.href === "/#home" && activeSection === "home")) &&
+                  (activeSection === item.href.split("#")[1] ||
+                    (item.href === "/#home" && activeSection === "home")) &&
                     "text-primary"
                 )}
               >
-                {link.name}
+                {t(`nav.${item.id}`)}
               </a>
             ))}
           </nav>

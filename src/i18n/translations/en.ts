@@ -1,6 +1,7 @@
 import { TranslationType } from "./types";
 
 export const en: TranslationType = {
+  // Header
   nav: {
     home: "Home",
     about: "About",
@@ -8,36 +9,48 @@ export const en: TranslationType = {
     projects: "Projects",
     testimonials: "Testimonials",
     contact: "Contact",
+    menuToggle: "Toggle menu",
   },
+
+  // Hero Section
   hero: {
-    greeting: "Hello, I'm",
-    role: "Frontend Developer",
-    description: "I craft beautiful, responsive websites with modern technologies. Let's bring your ideas to life!",
+    greeting: "Hi, I'm",
+    role: "Front-End Developer",
+    description:
+      "I build high-performing, visually appealing websites and web apps using modern technologies, with a strong focus on user experience.",
     viewWork: "View My Work",
     contactMe: "Contact Me",
   },
+
+  // About Section
   about: {
     title: "About Me",
-    subtitle: "Frontend Developer & UI/UX Enthusiast",
-    description: "I'm a passionate frontend developer with a keen eye for design and a love for creating seamless user experiences. With expertise in modern web technologies, I transform complex problems into simple, beautiful solutions.",
+    subtitle: "Front-End Developer Focused on UI/UX",
+    description:
+      "I'm a passionate front-end developer who specializes in crafting clean, accessible, and production-ready interfaces. With expertise in React and TypeScript, I develop scalable, high-performance UIs that are easy to maintain. My approach combines technical skill with a strong understanding of user needs and modern design principles. I'm committed to delivering intuitive, inclusive digital experiences while staying current with the latest tech and design trends.",
     services: {
       frontend: {
         title: "Frontend Development",
-        description: "Building responsive and interactive web applications using React, TypeScript, and modern CSS.",
+        description:
+          "I build modern, responsive web applications using React and TypeScript, focusing on performance, scalability, and great user experience.",
       },
       design: {
         title: "UI/UX Design",
-        description: "Creating intuitive and engaging user interfaces with a focus on user experience and accessibility.",
+        description:
+          "I design intuitive, visually appealing interfaces that follow modern design standards and accessibility best practices, ensuring a seamless experience.",
       },
       performance: {
-        title: "Performance Optimization",
-        description: "Ensuring fast loading times and smooth interactions through code optimization and best practices.",
+        title: "Web Performance",
+        description:
+          "I optimize web applications for speed and efficiency using techniques like lazy loading and code splitting, improving load times and user interactions.",
       },
     },
   },
+
+  // Skills Section
   skills: {
     title: "My Skills",
-    description: "Here are the technologies and tools I work with",
+    description: "Technologies and tools I specialize in.",
     categories: {
       all: "All",
       frontend: "Frontend",
@@ -46,90 +59,112 @@ export const en: TranslationType = {
     },
     proficiency: "Proficiency",
   },
+
+  // Projects Section
   projects: {
     title: "My Projects",
-    description: "Here are some of my recent works",
-    comingSoon: "More projects coming soon...",
-    viewMore: "View More",
-    projectCounter: "Project",
+    description:
+      "Here are some of my recent projects. Each showcases unique challenges and solutions using various technologies.",
+    comingSoon: "Coming Soon",
+    viewMore: "View More on GitHub",
+    projectCounter: "Project {current} of {total}",
     tags: {
       live: "Live Demo",
-      code: "View Code",
+      code: "Code",
     },
     items: {
       pokemon: {
-        title: "Pokemon App",
-        description: "A modern Pokemon application built with React and TypeScript, featuring a beautiful UI and smooth animations.",
+        title: "Memory Card Game (Pokémon)",
+        description:
+          "A card-matching memory game featuring Pokémon. Includes multiple levels and game-over logic. Built with React and fully responsive across all devices.",
       },
       shopping: {
-        title: "Shopping Cart",
-        description: "A fully functional e-commerce cart implementation with React and Redux, showcasing state management.",
+        title: "Shopping Cart Web App",
+        description:
+          "A full e-commerce app built with React. Users can browse products, manage their cart, and complete purchases. Features API integration and responsive design.",
       },
       resume: {
-        title: "Resume Builder",
-        description: "An interactive resume builder that helps users create professional CVs with real-time preview.",
+        title: "Responsive Resume Website",
+        description:
+          "A personal resume website showcasing education, experience, and skills. Built with HTML, CSS, and JavaScript, featuring light and dark mode themes.",
       },
       military: {
-        title: "Military Service",
-        description: "A comprehensive platform for managing military service records and documentation.",
+        title: "Military Equipment Shop",
+        description:
+          "An e-commerce web app built with React. Users can explore products, manage their cart, and place orders. Includes API integration and a responsive layout.",
       },
     },
   },
+
+  // Testimonials Section
   testimonials: {
     title: "Testimonials",
-    subtitle: "What people say about my work",
+    subtitle: "What People Say About My Work",
     items: {
       yassine: {
-        name: "Yassine",
-        role: "Senior Developer",
-        company: "Tech Solutions",
-        content: "An exceptional developer who consistently delivers high-quality work. His attention to detail and problem-solving skills are outstanding.",
+        name: "Yassine Benjelloun",
+        role: "Product Manager",
+        company: "Softech Solutions",
+        content:
+          "Working with this developer was an outstanding experience. Their skill in building intuitive, high-performance web apps is exceptional. They're attentive to detail and responsive to feedback, always delivering top-quality work.",
       },
       clara: {
-        name: "Clara",
-        role: "Project Manager",
-        company: "Digital Agency",
-        content: "Working with him was a pleasure. He not only met but exceeded our expectations with his technical expertise and creative solutions.",
+        name: "Clara Dupont",
+        role: "Lead Developer",
+        company: "TechWave",
+        content:
+          "This developer blends technical expertise with a passion for design. Their contributions significantly improved both our workflow and user experience. Always dependable and forward-thinking!",
       },
       marco: {
-        name: "Marco",
-        role: "UI Designer",
-        company: "Creative Studio",
-        content: "His ability to translate designs into pixel-perfect implementations is remarkable. A true professional in every sense.",
+        name: "Marco Rossi",
+        role: "UX/UI Designer",
+        company: "Pixelate Studios",
+        content:
+          "I've worked with many developers, but this one stands out. They turn complex design ideas into flawless code, resulting in responsive, consistent designs across all devices.",
       },
     },
   },
+
+  // Contact Section
   contact: {
-    title: "Get In Touch",
-    description: "Let's discuss your project and see how I can help bring your ideas to life",
+    title: "Get in Touch",
+    description:
+      "Have a project in mind or just want to connect? Feel free to reach out using the form below.",
     contactInfo: {
-      title: "Contact Information",
+      title: "Contact Info",
       email: "Email",
       phone: "Phone",
-      social: "Social Media",
+      social: "Social",
     },
     availability: {
-      title: "Availability",
-      description: "I'm currently available for freelance work and full-time positions. Let's discuss your project!",
+      title: "Current Availability",
+      description:
+        "I'm currently available for freelance work and open to new opportunities. I typically respond within 24 hours.",
     },
     form: {
-      name: "Name",
-      namePlaceholder: "Your name",
-      email: "Email",
-      emailPlaceholder: "Your email",
+      name: "Your Name",
+      namePlaceholder: "Full Name",
+      email: "Your Email",
+      emailPlaceholder: "email@example.com",
       message: "Message",
-      messagePlaceholder: "Your message",
+      messagePlaceholder: "Tell me about your project...",
       send: "Send Message",
       sending: "Sending...",
     },
     messages: {
-      success: "Message sent successfully! I'll get back to you soon.",
-      error: "Failed to send message. Please try again.",
-      autoReplyError: "Failed to send auto-reply. Please check your email address.",
+      success:
+        "Message sent! Thanks for reaching out. I'll get back to you shortly.",
+      error:
+        "Something went wrong while sending your message. Please try again later.",
+      autoReplyError:
+        "There was an issue sending the auto-reply. Please try again later.",
     },
   },
+
+  // Footer
   footer: {
-    tagline: "Let's create something amazing together",
-    copyright: "© 2024 All rights reserved.",
+    tagline: "Creating digital experiences that inspire.",
+    copyright:
+      "© {{year}} Mohamed B. — MIT Licensed",
   },
-}; 
+};

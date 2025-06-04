@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import {
   Carousel,
@@ -17,24 +17,25 @@ interface Skill {
 }
 
 const defaultSkills = [
-  { id: "1", name: "React", category: "Frontend", level: 85 },
-  { id: "2", name: "NextJS", category: "Frontend", level: 85 },
-  { id: "3", name: "JavaScript (ES6+)", category: "Frontend", level: 75 },
-  { id: "4", name: "HTML5", category: "Frontend", level: 95 },
-  { id: "5", name: "CSS3/SASS", category: "Frontend", level: 85 },
-  { id: "6", name: "TailwindCSS", category: "Frontend", level: 95 },
-  { id: "7", name: "Responsive Design", category: "Design", level: 95 },
-  { id: "8", name: "TypeScript", category: "Frontend", level: 70 },
-  { id: "9", name: "Redux/State Management", category: "Frontend", level: 70 },
-  { id: "10", name: "RESTful APIs", category: "Frontend", level: 90 },
-  { id: "11", name: "UI/UX Design", category: "Design", level: 80 },
-  { id: "12", name: "Web Accessibility", category: "Design", level: 90 },
-  { id: "13", name: "Git/GitHub", category: "Tools", level: 70 },
-  { id: "14", name: "React Testing Library", category: "Frontend", level: 75 },
-  { id: "15", name: "Web Performance", category: "Frontend", level: 85 },
+  { id: "1", name: "HTML5", category: "frontend", level: 95 },
+  { id: "2", name: "CSS3/SASS", category: "frontend", level: 85 },
+  { id: "3", name: "JavaScript (ES6+)", category: "frontend", level: 75 },
+  { id: "4", name: "TailwindCSS", category: "frontend", level: 95 },
+  { id: "5", name: "TypeScript", category: "frontend", level: 70 },
+  { id: "6", name: "React", category: "frontend", level: 85 },
+  { id: "7", name: "NextJS", category: "frontend", level: 85 },
+  { id: "8", name: "Redux/State Management", category: "frontend", level: 70 },
+  { id: "9", name: "RESTful APIs", category: "frontend", level: 90 },
+  { id: "10", name: "Web Performance", category: "frontend", level: 85 },
+  { id: "11", name: "React Testing Library", category: "frontend", level: 75 },
+  { id: "12", name: "Responsive Design", category: "design", level: 95 },
+  { id: "13", name: "Web Accessibility", category: "design", level: 90 },
+  { id: "14", name: "UI/UX Design", category: "design", level: 80 },
+  { id: "15", name: "Git/GitHub", category: "tools", level: 70 },
 ];
 
 export default function SkillsSection() {
+  const { t } = useTranslation();
   const [skills] = useState<Skill[]>(defaultSkills);
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [categories] = useState<string[]>(() =>
@@ -80,10 +81,12 @@ export default function SkillsSection() {
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-4 sm:mb-12 animate-fade-in">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">My Skills</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            {t("skills.title")}
+          </h2>
           <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-8"></div>
           <p className="text-lg text-foreground/80 max-w-3xl mx-auto">
-            Here are the technologies and tools I specialize in.
+            {t("skills.description")}
           </p>
         </div>
 
@@ -98,7 +101,7 @@ export default function SkillsSection() {
                 : "bg-secondary hover:bg-secondary/80"
             )}
           >
-            All
+            {t("skills.categories.all")}
           </button>
           {categories.map((category) => (
             <button
@@ -111,7 +114,7 @@ export default function SkillsSection() {
                   : "bg-secondary hover:bg-secondary/80"
               )}
             >
-              {category}
+              {t(`skills.categories.${category}`)}
             </button>
           ))}
         </div>
@@ -134,7 +137,7 @@ export default function SkillsSection() {
                               {skill.name}
                             </h3>
                             <p className="text-sm sm:text-xs text-muted-foreground mb-3">
-                              {skill.category}
+                              {t(`skills.categories.${skill.category}`)}
                             </p>
                             <div className="w-full bg-secondary rounded-full h-2.5 mb-1">
                               <div
@@ -143,7 +146,7 @@ export default function SkillsSection() {
                               ></div>
                             </div>
                             <div className="flex justify-between text-xs text-muted-foreground">
-                              <span>Proficiency</span>
+                              <span>{t("skills.proficiency")}</span>
                               <span>{skill.level}%</span>
                             </div>
                           </>

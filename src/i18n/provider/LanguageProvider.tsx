@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Language } from "../translations/types";
+import i18n from "i18next";
 
 type LanguageProviderProps = {
   children: React.ReactNode;
@@ -31,9 +32,11 @@ export function LanguageProvider({
   );
 
   useEffect(() => {
-    // Here you can add any language-specific logic
-    // For example, updating document lang attribute
+    // Update document lang attribute
     document.documentElement.lang = language;
+
+    // Sync with i18next
+    i18n.changeLanguage(language);
   }, [language]);
 
   const value = {

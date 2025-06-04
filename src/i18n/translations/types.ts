@@ -8,6 +8,7 @@ export type TranslationType = {
     projects: string;
     testimonials: string;
     contact: string;
+    menuToggle: string;
   };
   hero: {
     greeting: string;

@@ -1,6 +1,7 @@
 import { Quote } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useTranslation } from "react-i18next";
 import {
   Carousel,
   CarouselContent,
@@ -11,44 +12,26 @@ import {
 
 interface Testimonial {
   id: string;
-  name: string;
-  role: string;
-  company: string;
-  content: string;
   image: string;
 }
 
 const testimonials: Testimonial[] = [
   {
-    id: "1",
-    name: "Yassine Benjelloun",
-    role: "Product Manager",
-    company: "Softech Solutions",
-    content:
-      "Collaborating with this developer was an incredible experience. Their expertise in creating user-friendly and high-performance web apps is remarkable. They paid attention to every detail and always adapted to our feedback, delivering top-notch results.",
+    id: "yassine",
     image: "images/YassineBenjelloun.webp",
   },
   {
-    id: "2",
-    name: "Clara Dupont",
-    role: "Lead Developer",
-    company: "TechWave",
-    content:
-      "This developer combines technical mastery with a real passion for design. Their contributions to our e-commerce platform have greatly improved both our development workflow and the overall user experience. Always reliable and innovative!",
+    id: "clara",
     image: "images/ClaraDupont.webp",
   },
   {
-    id: "3",
-    name: "Marco Rossi",
-    role: "UX/UI Designer",
-    company: "Pixelate Studios",
-    content:
-      "I've worked with many developers, but this one stands out. Their ability to take complex design concepts and turn them into flawless code is exceptional. The result was a seamless, responsive design that performed excellently across all devices.",
+    id: "marco",
     image: "images/MarcoRossi.webp",
   },
 ];
 
 export default function TestimonialsSection() {
+  const { t } = useTranslation();
   const isMobile = useIsMobile();
 
   const renderTestimonialCard = (testimonial: Testimonial, index: number) => (
@@ -68,20 +51,23 @@ export default function TestimonialsSection() {
         <div className="w-12 h-12 rounded-full overflow-hidden">
           <img
             src={testimonial.image}
-            alt={testimonial.name}
+            alt={t(`testimonials.items.${testimonial.id}.name`)}
             className="w-full h-full object-cover"
           />
         </div>
         <div>
-          <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
+          <h4 className="font-semibold text-foreground">
+            {t(`testimonials.items.${testimonial.id}.name`)}
+          </h4>
           <p className="text-sm text-foreground/70">
-            {testimonial.role} at {testimonial.company}
+            {t(`testimonials.items.${testimonial.id}.role`)} at{" "}
+            {t(`testimonials.items.${testimonial.id}.company`)}
           </p>
         </div>
       </div>
 
       <p className="text-foreground/80 leading-relaxed">
-        {testimonial.content}
+        {t(`testimonials.items.${testimonial.id}.content`)}
       </p>
     </div>
   );
@@ -93,10 +79,12 @@ export default function TestimonialsSection() {
     >
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Testimonials</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            {t("testimonials.title")}
+          </h2>
           <div className="w-20 h-1 bg-primary mx-auto rounded-full mb-8"></div>
           <h3 className="text-xl md:text-2xl font-semibold mb-6 text-foreground/90">
-            What People Say About My Work
+            {t("testimonials.subtitle")}
           </h3>
         </div>
 

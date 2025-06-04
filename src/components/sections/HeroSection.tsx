@@ -1,7 +1,12 @@
 import { ArrowDown } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
+import { useTranslation } from "react-i18next";
+import { getTranslation } from "../../i18n/translations";
+import { Language } from "../../i18n/translations/types";
 
 export default function HeroSection() {
+  const { t } = useTranslation();
+
   return (
     <section
       id="home"
@@ -18,7 +23,7 @@ export default function HeroSection() {
               <div className="flex items-center justify-center lg:justify-start gap-4  pt-28 lg:pt-0 ">
                 <div className="w-3 h-3 rounded-full bg-primary animate-bounce-light"></div>
                 <p className="text-lg font-medium text-foreground/80">
-                  Hi there, I'm
+                  {t("hero.greeting")}
                 </p>
               </div>
 
@@ -27,17 +32,16 @@ export default function HeroSection() {
               </h1>
 
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-mono text-foreground/80">
-                Front-End Developer
+                {t("hero.role")}
               </h2>
 
               <p className="text-base sm:text-lg text-foreground/70 leading-relaxed max-w-xl mx-auto lg:mx-0">
-                I create stunning, performant websites and web applications with
-                modern technologies and a focus on user experience.
+                {t("hero.description")}
               </p>
 
               <div className="flex flex-wrap gap-4 pt-4 justify-center lg:justify-start">
                 <Button asChild size="lg" className="rounded-full">
-                  <a href="#projects">View My Work</a>
+                  <a href="#projects">{t("hero.viewWork")}</a>
                 </Button>
 
                 <Button
@@ -46,7 +50,7 @@ export default function HeroSection() {
                   size="lg"
                   className="rounded-full"
                 >
-                  <a href="#contact">Contact Me</a>
+                  <a href="#contact">{t("hero.contactMe")}</a>
                 </Button>
               </div>
             </div>
