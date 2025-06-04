@@ -1,18 +1,23 @@
-
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "./ThemeProvider";
 import { cn } from "@/lib/utils";
+import { Theme } from "./theme-types";
 
 export function ThemeToggle({ className }: { className?: string }) {
   const { theme, setTheme } = useTheme();
+
+  const toggleTheme = () => {
+    const newTheme: Theme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+  };
 
   return (
     <div className="flex items-center gap-2">
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+        onClick={toggleTheme}
         className={cn("rounded-full", className)}
         aria-label="Toggle theme"
       >

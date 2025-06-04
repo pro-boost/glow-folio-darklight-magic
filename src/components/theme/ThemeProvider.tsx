@@ -1,21 +1,15 @@
-
 import { createContext, useContext, useEffect, useState } from "react";
-
-type Theme = "dark" | "light" | "system";
-
-type ThemeProviderProps = {
-  children: React.ReactNode;
-  defaultTheme?: Theme;
-  storageKey?: string;
-};
-
-type ThemeProviderState = {
-  theme: Theme;
-  setTheme: (theme: Theme) => void;
-};
+import {
+  Theme,
+  ThemeProviderProps,
+  ThemeProviderState,
+  DEFAULT_THEME,
+  THEME_STORAGE_KEY,
+  COLOR_STORAGE_KEYS,
+} from "./theme-types";
 
 const initialState: ThemeProviderState = {
-  theme: "system",
+  theme: DEFAULT_THEME,
   setTheme: () => null,
 };
 
@@ -23,8 +17,8 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
 
 export function ThemeProvider({
   children,
-  defaultTheme = "system",
-  storageKey = "portfolio-theme",
+  defaultTheme = DEFAULT_THEME,
+  storageKey = THEME_STORAGE_KEY,
   ...props
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(
@@ -51,18 +45,29 @@ export function ThemeProvider({
 
   // Apply saved theme colors from localStorage
   useEffect(() => {
-    const savedPrimaryColor = localStorage.getItem("theme-primary-color");
-    const savedSecondaryColor = localStorage.getItem("theme-secondary-color");
-    const savedAccentColor = localStorage.getItem("theme-accent-color");
-    
+    const savedPrimaryColor = localStorage.getItem(COLOR_STORAGE_KEYS.primary);
+    const savedSecondaryColor = localStorage.getItem(
+      COLOR_STORAGE_KEYS.secondary
+    );
+    const savedAccentColor = localStorage.getItem(COLOR_STORAGE_KEYS.accent);
+
     if (savedPrimaryColor) {
-      document.documentElement.style.setProperty("--primary-color", savedPrimaryColor);
+      document.documentElement.style.setProperty(
+        "--primary-color",
+        savedPrimaryColor
+      );
     }
     if (savedSecondaryColor) {
-      document.documentElement.style.setProperty("--secondary-color", savedSecondaryColor);
+      document.documentElement.style.setProperty(
+        "--secondary-color",
+        savedSecondaryColor
+      );
     }
     if (savedAccentColor) {
-      document.documentElement.style.setProperty("--accent-color", savedAccentColor);
+      document.documentElement.style.setProperty(
+        "--accent-color",
+        savedAccentColor
+      );
     }
   }, []);
 
@@ -81,11 +86,11 @@ export function ThemeProvider({
   );
 }
 
-export const useTheme = () => {
+export function useTheme() {
   const context = useContext(ThemeProviderContext);
 
   if (context === undefined)
     throw new Error("useTheme must be used within a ThemeProvider");
 
   return context;
-};
+}

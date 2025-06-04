@@ -6,9 +6,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
-import { ThemeProvider } from "./components/ThemeProvider";
+import { ThemeProvider } from "./components/theme/ThemeProvider";
 import { LanguageProvider } from "./i18n";
-import BackToTop from "./components/BackToTop";
+import BackToTop from "./components/ui/BackToTop";
 import "./styles.css";
 
 const queryClient = new QueryClient();

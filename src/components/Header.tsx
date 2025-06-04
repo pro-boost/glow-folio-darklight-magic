@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "./ThemeToggle";
+import { ThemeToggle } from "./theme/ThemeToggle";
 import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import useScrollSpy from "../hooks/use-scroll-spy"; // Import the hook
