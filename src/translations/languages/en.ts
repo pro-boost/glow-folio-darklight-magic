@@ -144,6 +144,6 @@ export const en: TranslationType = {
 
   footer: {
     tagline: "Creating digital experiences that inspire.",
-    copyright: "© {year} Mohamed B. — MIT Licensed",
+    copyright: "© {{year}} Mohamed B. — MIT Licensed",
   },
 }; 
